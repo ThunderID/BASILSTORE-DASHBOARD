@@ -1,3 +1,4 @@
+const nodeExternals = require('webpack-node-externals')
 const resolve = (dir) => require('path').join(__dirname, dir)
 
 module.exports = {
@@ -61,14 +62,13 @@ module.exports = {
       Bucket: 'DAZZBOR'
     }
   },
-  // mode: 'spa',
+  mode: 'spa',
   plugins: [
-    // '~/plugins/vuetify.js',
+    '~/plugins/vuetify.js',
     {src: '~/plugins/client-side-plugins.js', ssr: false},
     // {src: '~/plugins/laravel-validation-trans.js', ssr: false}
   ],
   router: {
-    middleware: [],
     linkActiveClass: null
   },
   css: [
@@ -108,7 +108,12 @@ module.exports = {
   build: {
     babel: {
       plugins: [
-        ["transform-imports", {}],
+        ["transform-imports", {
+          "vuetify": {
+            "transform": "vuetify/es5/components/${member}",
+            "preventFullImport": true
+          }
+        }]
       ]
     },
     vendor: [],
