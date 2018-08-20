@@ -1,4 +1,3 @@
-const nodeExternals = require('webpack-node-externals')
 const resolve = (dir) => require('path').join(__dirname, dir)
 
 module.exports = {
@@ -15,6 +14,7 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Quicksand:400,700|Material+Icons' },
+      
     ]
   },
   env: {
@@ -61,20 +61,18 @@ module.exports = {
       Bucket: 'DAZZBOR'
     }
   },
-  mode: 'spa',
+  // mode: 'spa',
   plugins: [
-    '~/plugins/vuetify.js',
+    // '~/plugins/vuetify.js',
     {src: '~/plugins/client-side-plugins.js', ssr: false},
-    {src: '~/plugins/laravel-validation-trans.js', ssr: false}
+    // {src: '~/plugins/laravel-validation-trans.js', ssr: false}
   ],
   router: {
-    middleware: [
-      'reset_alerts',
-    ],
+    middleware: [],
     linkActiveClass: null
   },
   css: [
-    '~/assets/style/app.styl'
+    // '~/assets/style/app.styl'
   ],
   /*
   ** Customize the progress bar color
@@ -89,6 +87,8 @@ module.exports = {
   ** Modules
    */
   modules: [
+    'bootstrap-vue/nuxt',
+    // ['bootstrap-vue/nuxt', { css: false }],
     '@nuxtjs/apollo',
     '@nuxtjs/proxy'
   ],
@@ -108,18 +108,11 @@ module.exports = {
   build: {
     babel: {
       plugins: [
-        ["transform-imports", {
-          "vuetify": {
-            "transform": "vuetify/es5/components/${member}",
-            "preventFullImport": true
-          }
-        }],
+        ["transform-imports", {}],
       ]
     },
-    vendor: [
-      '~/plugins/vuetify.js'
-    ],
-    extractCSS: true,
+    vendor: [],
+    // extractCSS: true,
     /*
     ** Run ESLint on save
     */
@@ -131,16 +124,6 @@ module.exports = {
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
-      }
-      if (ctx.isServer) {
-        config.externals = [
-          nodeExternals({
-            whitelist: [/^vuetify/]
-          })
-        ]
-      }
-      config.node = {
-        fs: 'empty'
       }
     }
   }
