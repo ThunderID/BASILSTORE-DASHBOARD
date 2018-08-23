@@ -4,7 +4,7 @@
     <b-navbar toggleable="md" type="light" class='border-bottom p-0 p-md-1' variant="white">
 
       <!-- BRAND -->
-      <b-navbar-brand href="/dashboard">
+      <b-navbar-brand :to="'/dashboard'">
         <img src="/l.png" height="40" class='pl-3'>
       </b-navbar-brand>
 
@@ -13,17 +13,24 @@
       <b-collapse is-nav id="nav_collapse">
         <!-- Left -->
         <b-navbar-nav class='px-3 mt-3 mt-md-0'>
-          <b-nav-item href='/dashboard'>Dashboard</b-nav-item>  
-          <b-nav-item href='/dashboard'>Akun</b-nav-item>
-          <b-nav-item href='/dashboard'>Produk</b-nav-item>
-          <b-nav-item href='/dashboard'>Supplier</b-nav-item>
-          <b-nav-item href='/dashboard'>Pelanggan</b-nav-item>
-          
-          <b-nav-item-dropdown right text="Pengaturan">
-            <b-dropdown-item href='/dashboard'>Akun</b-dropdown-item>
-            <b-dropdown-item href='/dashboard'>Produk</b-dropdown-item>
-            <b-dropdown-item href='/dashboard'>Supplier</b-dropdown-item>
-            <b-dropdown-item href='/dashboard'>Pelanggan</b-dropdown-item>
+          <b-nav-item :to="'/dashboard'">Dashboard</b-nav-item>  
+          <b-nav-item-dropdown right text="Katalog">
+            <b-dropdown-item :to="'/catalog'">Katalog</b-dropdown-item>
+            <b-dropdown-item :to="'/dashboard'">Promo</b-dropdown-item>
+          </b-nav-item-dropdown>
+          <b-nav-item-dropdown right text="Penjualan">
+            <b-dropdown-item :to="'/dashboard'">Pesanan</b-dropdown-item>
+            <b-dropdown-header class="font-weight-bold">Laporan</b-dropdown-header>
+            <b-dropdown-item :to="'/dashboard'">Penjualan</b-dropdown-item>
+            <b-dropdown-item :to="'/dashboard'">Pesanan</b-dropdown-item>
+          </b-nav-item-dropdown>
+          <b-nav-item-dropdown right text="Kasir">
+            <b-dropdown-header class="font-weight-bold">Laporan</b-dropdown-header>
+            <b-dropdown-item href='/dashboard'>Bukti Register Transaksi</b-dropdown-item>
+            <b-dropdown-item href='/dashboard'>Laporan Ulang Masuk</b-dropdown-item>
+          </b-nav-item-dropdown>
+          <b-nav-item-dropdown right text="Admin">
+            <b-dropdown-item href='/dashboard'>Tambah Admin</b-dropdown-item>
           </b-nav-item-dropdown>  
 
         </b-navbar-nav>

@@ -64,7 +64,7 @@ module.exports = {
   },
   mode: 'spa',
   plugins: [
-    '~/plugins/vuetify.js',
+    // '~/plugins/vuetify.js',
     {src: '~/plugins/client-side-plugins.js', ssr: false},
     // {src: '~/plugins/laravel-validation-trans.js', ssr: false}
   ],
@@ -72,7 +72,7 @@ module.exports = {
     linkActiveClass: null
   },
   css: [
-    // '~/assets/style/app.styl'
+    '~/assets/style/app.styl'
   ],
   /*
   ** Customize the progress bar color

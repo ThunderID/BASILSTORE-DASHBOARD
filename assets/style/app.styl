@@ -1,11 +1,11 @@
 // Import Vuetify styling
-@require '~vuetify/src/stylus/app.styl'
 
-.page
-  @extend .fade-transition
+// .page
+  // @extend .fade-transition
 
 * { font-family: 'Quicksand', sans-serif; font-weight: 400 !important; }
 a { text-decoration:none; }
+a:focus { outline: none; }
   
 /* Input */
 .input-group > label { text-transform: uppercase; }
@@ -16,6 +16,7 @@ select::placeholder, input::placeholder { color:#555 !important; }
 /* Typography */
 .title { font-family: 'Quicksand', sans-serif; }
 .text-uppercase, th { text-transform: uppercase; }
+table th { font-weight: bold !important; }
 
 /* Border */
 .b-1 { border: 1px solid #ddd; }
