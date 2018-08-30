@@ -1,8 +1,10 @@
 <template>
   <div>
+    <b-button variant="primary mb-3 px-3" :to="'/catalog/product/add'">Tambah Baru</b-button>
+		
     <b-card title="Katalog">
       <div class='card-text pt-4'>
-        <TableCatalog></TableCatalog>
+        <TableCatalog ref="TableCatalog" :headers="['upc', 'thumbnail', 'nama', 'harga', 'varian']"></TableCatalog>
       </div>
     </b-card>
   </div>

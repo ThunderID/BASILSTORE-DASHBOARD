@@ -15,6 +15,8 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Quicksand:400,700|Material+Icons' },
+      { rel: 'stylesheet', integrity: "sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ", crossorigin: "anonymous", href: 'https://use.fontawesome.com/releases/v5.2.0/css/all.css' },
+      { rel: 'stylesheet', href: '/css/app.css' }
       
     ]
   },
@@ -67,12 +69,14 @@ module.exports = {
     // '~/plugins/vuetify.js',
     {src: '~/plugins/client-side-plugins.js', ssr: false},
     // {src: '~/plugins/laravel-validation-trans.js', ssr: false}
+    '~/plugins/vue-select.js',
+    '~/plugins/vue-js-toggle.js'
   ],
   router: {
     linkActiveClass: null
   },
   css: [
-    '~/assets/style/app.styl'
+    // '~/assets/style/app.styl'
   ],
   /*
   ** Customize the progress bar color
@@ -87,8 +91,8 @@ module.exports = {
   ** Modules
    */
   modules: [
-    'bootstrap-vue/nuxt',
-    // ['bootstrap-vue/nuxt', { css: false }],
+    // 'bootstrap-vue/nuxt',
+    ['bootstrap-vue/nuxt', { css: false }],
     '@nuxtjs/apollo',
     '@nuxtjs/proxy'
   ],

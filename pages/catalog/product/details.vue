@@ -1,36 +1,35 @@
 <template>
   <div>
-    <b-table hover 
-      :fields="computedHeaders"
-      :items="table.data"
-      @row-clicked="rowClicked"
-      empty-text="Tidak ada data">
-      <template slot="thumbnail" slot-scope="data">
-        <b-img :src="data.value" width="75"/>
-      </template>
-      <template slot="harga" slot-scope="data">
-        {{ data.value.currency }} {{ data.value.nominal }}
-      </template>
-      <template slot="varian" slot-scope="data">
-        <ul class="list-unstyled" v-for="varian in data.value">
-          <li>{{ varian.size }} - {{ varian.stok }} pcs</li>
-        </ul>
-      </template>
-    </b-table>
+    <b-button variant="primary mb-3 px-3" :to="'/catalog/product'">Kembali</b-button>
+    <b-card title="">
+      <b-container fluid>
+        <b-row>
+          <b-col>
+            <b-img-lazy src="http://drive.thunder.id/file/public/4/10/2017/01/09/15/Arpisa-Front-xs.jpg" thumbnail/>
+          </b-col>
+          <b-col md="9">
+            <h4>Batik Kris - 88GHMN00</h4>
+            <h5 class="font-weight-light">IDR 300.000</h5>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <p><strong>Kategori</strong></p>
+            <div class="clearfix">&nbsp;</div>
+            <p><strong>Varian</strong></p>
+            <div class="clearfix">&nbsp;</div>
+            <p><strong>Dijual ditoko</strong></p>
+            <div class="clearfix">&nbsp;</div>
+          </b-col>
+        </b-row>
+      </b-container>
+    </b-card>
   </div>
 </template>
-<script>
 
+<script>
 import CatalogQuery from '~/apollo/queries/query_catalog'
 
 export default {
   props: {
-    headers: {
-      type: Array,
-      default: function () {
-        return []
-      }
-    },
     dataFilter: {
       type: Object,
       default: function () {
@@ -42,21 +41,6 @@ export default {
       default: function () {
         return []
       }
-    }
-  },
-  computed: {
-    computedHeaders: function () {
-      let vm = this
-      let tmp = []
-      vm.headers.forEach(function (item) {
-        for (let i = 0; i < vm.table.availableHeaders.length; i++) {
-          if (vm.table.availableHeaders[i].key === item) {
-            tmp.push(vm.table.availableHeaders[i])
-          }
-        }
-      })
-
-      return tmp
     }
   },
   apollo: {
@@ -74,18 +58,11 @@ export default {
         data: [],
         filter: {
           skip: 0,
-          take: 0,
+          take: 1,
           toko: 'KORAKADINOYO',
           kostumer: 'SAYA',
           waktu: 'today'
-        },
-        availableHeaders: [
-          { key: 'upc', label: 'UPC', sortable: true },
-          { key: 'nama', label: 'Nama', sortable: true },
-          { key: 'thumbnail', label: 'Gambar', sortable: true },
-          { key: 'harga', label: 'Harga', sortable: true },
-          { key: 'varian', label: 'Varian', class: 'text-center', tdClass: 'text-center' }
-        ]
+        }
       }
     }
   },
@@ -93,7 +70,7 @@ export default {
     if (this.defaultData.length === 0) {
       this.fetch()
     } else {
-      this.table.data = this.defaultData
+      // this.table.data = this.defaultData
     }
   },
   methods: {
@@ -133,10 +110,6 @@ export default {
           vm.$emit('SUBMIT_ERROR', 'Fail to connect to server')
         }
       })
-    },
-    rowClicked (record, index) {
-      let vm = this
-      vm.$nuxt.$router.replace({ path: '/catalog/product/details' })
     }
   }
 }

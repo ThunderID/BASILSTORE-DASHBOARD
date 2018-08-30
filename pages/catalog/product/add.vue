@@ -1,5 +1,6 @@
 <template>
   <div>
+    <b-button variant="primary mb-3 px-3" :to="'/catalog/product'">Kembali</b-button>
     <b-card title="Tambah Katalog">
       <div class='card-text pt-4'>
         <FormCatalog class='m-t-lg' @SUCCESS="onUpdateCatalogSuccess" @FAIL="onUpdateCatalogFail"></FormCatalog>

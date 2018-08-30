@@ -1,0 +1,22 @@
+query SalesKatalog(
+		$skip: Int,
+		$take: Int,
+		$toko: String,
+		$kostumer: String,
+		$waktu: String
+	) {
+		SalesKatalog(
+			skip: $skip,
+			take: $take,
+			toko: $toko,
+			kostumer: $kostumer,
+			waktu: $waktu
+		) {
+			upc,
+			nama,
+			thumbnail,
+			harga{nominal, currency},
+			varian{size, is_stock, stok},
+			promo{judul, deskripsi, potongan{nominal, currency}}
+		}
+}
