@@ -3,20 +3,25 @@ query SalesKatalog(
 		$take: Int,
 		$toko: String,
 		$kostumer: String,
-		$waktu: String
+		$waktu: String,
+		$upc: String,
+		$keywords: [String]
 	) {
 		SalesKatalog(
 			skip: $skip,
 			take: $take,
 			toko: $toko,
 			kostumer: $kostumer,
-			waktu: $waktu
+			waktu: $waktu,
+			upc: $upc,
+			keywords: $keywords
 		) {
 			upc,
 			nama,
 			thumbnail,
 			harga{nominal, currency},
-			varian{size, is_stock, stok},
-			promo{judul, deskripsi, potongan{nominal, currency}}
+			opsi{judul, varian{parameter, value, sku, bundle}, bundle},
+			promo{judul, deskripsi, potongan{nominal, currency}},
+			keywords
 		}
 }

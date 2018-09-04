@@ -1,0 +1,25 @@
+query TransaksiJual(
+		$skip: Int,
+		$take: Int,
+		$toko: String
+	) {
+		SalesKatalog(
+			skip: $skip,
+			take: $take,
+			toko: $toko
+		) {
+			nomor,
+			tanggal,
+			kasir{username, nama},
+			lines{
+				reference, 
+				nama, 
+				unit{kuantitas, satuan},
+				harga_unit{nominal, currency},
+				subtotal{nominal, currency},
+				offers{judul, deskripsi, potongan{nominal, currency}},
+				taken_offer{judul, deskripsi, potongan{nominal, currency}}
+			},
+			taken_offer{judul, deskripsi, potongan{nominal, currency}}
+		}
+}

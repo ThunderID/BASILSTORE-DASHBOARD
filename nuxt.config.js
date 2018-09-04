@@ -73,7 +73,7 @@ module.exports = {
     '~/plugins/vue-js-toggle.js'
   ],
   router: {
-    linkActiveClass: null
+    // linkActiveClass: null
   },
   css: [
     // '~/assets/style/app.styl'

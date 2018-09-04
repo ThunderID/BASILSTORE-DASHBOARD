@@ -18,10 +18,10 @@
       <b-row>
         <b-col cols="12" md="3" xl="2" class="bg-white border-right border-bottom" style="height: 100vh">
           <b-nav vertical class="py-4">
-            <b-nav-item :to="'/catalog/product'" active-class="d-flex"><i class='material-icons mr-2'>local_grocery_store</i> Produk</b-nav-item>
-            <b-nav-item :to="'/'" active-class="d-flex"><i class='material-icons mr-2'>card_giftcard</i> Promo</b-nav-item>
-            <b-nav-item :to="'/'" active-class="d-flex"><i class='material-icons mr-2'>settings</i> Settings</b-nav-item>
-            <b-nav-item :to="'/'" active-class="d-flex"><i class='material-icons mr-2'>insert_drive_file</i> Report</b-nav-item>
+            <b-nav-item :to="{ name: 'catalog-product' }" active-class="d-flex" ><i class='material-icons mr-2'>local_grocery_store</i> Produk</b-nav-item>
+            <b-nav-item :to="{ name: 'catalog-promo' }" active-class="d-flex"><i class='material-icons mr-2'>card_giftcard</i> Promo</b-nav-item>
+            <b-nav-item  active-class="d-flex"><i class='material-icons mr-2'>settings</i> Settings</b-nav-item>
+            <b-nav-item  active-class="d-flex"><i class='material-icons mr-2'>insert_drive_file</i> Report</b-nav-item>
           </b-nav>
         </b-col>
         <b-col>

@@ -6,6 +6,7 @@ import 'moment/locale/id'
 Vue.use(VeeValidate, {
   inject: true,
   locale: 'id',
+  fieldsBagName: 'veeFields',
   dictionary: {
     id: {
       messages: {
@@ -35,9 +36,9 @@ Vue.filter('toCurrency', function (value, prefix = '', suffix = '') {
       value = value * 1
     }
   }
-  var parts = value.toString().split('.')
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-  return prefix + parts.join('.') + suffix
+  var parts = value.toString().split(',')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  return prefix + parts.join(',') + suffix
 })
 
 Vue.filter('capitalize', function (value) {

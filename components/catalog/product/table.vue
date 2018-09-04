@@ -1,35 +1,32 @@
 <template>
   <div>
-    <b-button variant="primary mb-3 px-3" :to="'/catalog/product'">Kembali</b-button>
-    <b-card title="">
-      <b-container fluid>
-        <b-row>
-          <b-col>
-            <b-img-lazy src="http://drive.thunder.id/file/public/4/10/2017/01/09/15/Arpisa-Front-xs.jpg" thumbnail/>
-          </b-col>
-          <b-col md="9">
-            <h4>Batik Kris - 88GHMN00</h4>
-            <h5 class="font-weight-light">IDR 300.000</h5>
-            <div class="clearfix">&nbsp;</div>
-            <div class="clearfix">&nbsp;</div>
-            <p><strong>Kategori</strong></p>
-            <div class="clearfix">&nbsp;</div>
-            <p><strong>Varian</strong></p>
-            <div class="clearfix">&nbsp;</div>
-            <p><strong>Dijual ditoko</strong></p>
-            <div class="clearfix">&nbsp;</div>
-          </b-col>
-        </b-row>
-      </b-container>
-    </b-card>
+    <b-table hover 
+      :fields="computedHeaders"
+      :items="dataTable"
+      @row-clicked="rowClicked"
+      empty-text="Tidak ada data">
+      <template slot="thumbnail" slot-scope="data">
+        <b-img-lazy v-if="data.value" :src="data.value" width="75" blank-color="#bbb"/>
+        <b-img v-else blank width="75" blank-color="#bbb" tes/>
+      </template>
+      <template slot="harga" slot-scope="data">
+        <!-- {{ data.value.currency }} {{ data.value.nominal | toCurrency }} -->
+      </template>
+    </b-table>
   </div>
 </template>
-
 <script>
+
 import CatalogQuery from '~/apollo/queries/query_catalog'
 
 export default {
   props: {
+    headers: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    },
     dataFilter: {
       type: Object,
       default: function () {
@@ -41,6 +38,25 @@ export default {
       default: function () {
         return []
       }
+    }
+  },
+  computed: {
+    computedHeaders: function () {
+      let temp = this
+      let tmp = []
+      temp.headers.forEach(function (item) {
+        for (let i = 0; i < temp.table.availableHeaders.length; i++) {
+          if (temp.table.availableHeaders[i].key === item) {
+            tmp.push(temp.table.availableHeaders[i])
+          }
+        }
+      })
+
+      return tmp
+    },
+    dataTable: function () {
+      let data = this.table.data
+      return data
     }
   },
   apollo: {
@@ -56,13 +72,13 @@ export default {
     return {
       table: {
         data: [],
-        filter: {
-          skip: 0,
-          take: 1,
-          toko: 'KORAKADINOYO',
-          kostumer: 'SAYA',
-          waktu: 'today'
-        }
+        filter: {},
+        availableHeaders: [
+          { key: 'upc', label: 'UPC', sortable: true },
+          { key: 'nama', label: 'Nama', sortable: true },
+          { key: 'thumbnail', label: 'Gambar', sortable: false },
+          { key: 'harga', label: 'Harga', sortable: true }
+        ]
       }
     }
   },
@@ -70,19 +86,19 @@ export default {
     if (this.defaultData.length === 0) {
       this.fetch()
     } else {
-      // this.table.data = this.defaultData
+      this.table.data = this.defaultData
     }
   },
   methods: {
     fetch () {
       let vm = this
       vm.table.data = []
-      let queryVar = {
-        toko: vm.table.filter.toko,
-        kostumer: vm.table.filter.kostumer,
-        waktu: vm.table.filter.waktu,
-        skip: vm.table.filter.skip,
-        take: vm.table.filter.take
+      let queryVar = {}
+
+      for (let key in this.dataFilter) {
+        if (this.dataFilter.hasOwnProperty(key)) {
+          queryVar[key] = this.dataFilter[key]
+        }
       }
 
       this.$apollo.query(
@@ -94,6 +110,7 @@ export default {
       ).then(function (result) {
         vm.table.data = result.data.SalesKatalog
       }).catch(e => {
+        console.log('gagal')
         if (e.graphQLErrors && Array.isArray(e.graphQLErrors) && e.graphQLErrors.length) {
           e.graphQLErrors.forEach(function (error) {
             switch (error.code) {
@@ -110,6 +127,10 @@ export default {
           vm.$emit('SUBMIT_ERROR', 'Fail to connect to server')
         }
       })
+    },
+    rowClicked (record, index) {
+      let vm = this
+      vm.$nuxt.$router.replace({path: '/catalog/product/' + record.upc, query: vm.dataFilter})
     }
   }
 }
