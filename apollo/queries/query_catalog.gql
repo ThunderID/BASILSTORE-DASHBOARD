@@ -1,27 +1,56 @@
-query SalesKatalog(
+query pengaturanBarang(
 		$skip: Int,
 		$take: Int,
-		$toko: String,
-		$kostumer: String,
-		$waktu: String,
+		$owner: String,
 		$upc: String,
 		$keywords: [String]
 	) {
-		SalesKatalog(
+		pengaturanBarang(
 			skip: $skip,
 			take: $take,
-			toko: $toko,
-			kostumer: $kostumer,
-			waktu: $waktu,
+			owner: $owner,
 			upc: $upc,
 			keywords: $keywords
 		) {
 			upc,
 			nama,
 			thumbnail,
-			harga{nominal, currency},
-			opsi{judul, varian{parameter, value, sku, bundle}, bundle},
-			promo{judul, deskripsi, potongan{nominal, currency}},
-			keywords
+			opsi{
+				id, 
+				judul, 
+				varian{
+					parameter, 
+					value, 
+					sku, 
+					bundle
+				},
+				bundle
+			},
+			list_harga{
+				id, 
+				harga{
+					nominal, 
+					currency
+				},
+				mulai{
+					date, 
+					timezone_type, 
+					timezone
+				},
+				hingga{
+					date, 
+					timezone_type, 
+					timezone
+				},
+				penetapan{
+					satuan, 
+					bundle
+				},
+				berlaku
+			}
+			list_grup{
+				keyword,
+				berlaku
+			}
 		}
 }

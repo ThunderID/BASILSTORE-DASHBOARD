@@ -1,6 +1,13 @@
 <template>
-  <div>
-    <b-button variant="primary mb-3 px-3" :to="'/catalog/product'">Kembali</b-button>
+  <div class="container-fluid">
+    <b-row align-h="between">
+      <b-col cols="12" md="6">
+        <b-button variant="primary mb-3 px-3" :to="'/catalog/product'">Kembali</b-button>
+      </b-col>
+      <b-col cols="12" md="6" class="text-right">
+        <b-button variant="primary mb-3 px-3" :to="{path: '/catalog/product/add/', query: $route.query}">Ubah</b-button>
+      </b-col>
+    </b-row>
     <b-card>
       <b-media>
         <b-img-lazy v-if="table.data.thumbnail"  slot="aside" :src="`${table.data.thumbnail}`" :alt="table.data.nama" thumbnail fluid  blank-color="#bbb"/>
@@ -10,8 +17,12 @@
           <p class="font-weight-light">
             <span v-if="table.data.harga">{{ table.data.harga.currency }} {{ table.data.harga.nominal | toCurrency }}</span>
           </p>
-          <div class="clearfix">&nbsp;</div>
-          <p><strong>Kategori</strong></p>
+          <p class="mb-1"><strong>Kategori</strong></p>
+          <div v-if="table.data.list_grup">
+            <b-badge class="mr-1" variant="primary" v-for="grup in table.data.list_grup">
+              {{grup.keyword.substring(grup.keyword.lastIndexOf(",") + 1)}}
+            </b-badge>
+          </div>
           <div class="clearfix">&nbsp;</div>
 
           <!-- varian -->
@@ -33,15 +44,34 @@
           </div>
           <div class="clearfix">&nbsp;</div>
 
-          <!-- promo  -->
-          <b-card header="Promo" header-tag="header" class="w-100">
-            <b-table hover small
-              show-empty
-              empty-text="Belum ada promo"
-              :fields="[{key: 'judul', label: 'Judul', thClass: 'font-weight-bold border-top-0'}, {key: 'deskripsi', label: 'Deskripsi', thClass: 'font-weight-bold border-top-0'}]"
-              :items="table.data.promo">
-            </b-table>
-          </b-card>
+          <!-- list harga -->
+          <p v-if="table.data.list_harga && table.data.list_harga != 0"><strong>List Harga</strong></p>
+          <div v-if="table.data.list_harga && table.data.list_harga != 0" >
+            <b-card  header-tag="header" class="w-100">
+              <b-table hover small
+                show-empty
+                empty-text="Belum ada list harga"
+                class="text-capitalize"
+                :fields="[
+                  {key: 'harga', label: 'Harga', thClass: 'font-weight-bold border-top-0'}, 
+                  {key: 'mulai', label: 'Berlaku Tgl', thClass: 'font-weight-bold border-top-0'}, 
+                  {key: 'penetapan', label: 'Satuan', thClass: 'font-weight-bold border-top-0'}
+                ]"
+                :items="table.data.list_harga">
+                <template slot="harga" slot-scope="data">
+                  <span v-if="data.item.harga">{{ data.item.harga.currency }} {{ data.item.harga.nominal | toCurrency }}</span>
+                </template>
+
+                <template slot="mulai" slot-scope="data">
+                  <span v-if="data.item.mulai">{{ data.item.mulai.date | toDateTime }}</span>
+                </template>
+
+                <template slot="penetapan" slot-scope="data">
+                  <span v-if="data.item.penetapan" class="text-uppercase">{{ data.item.penetapan.satuan }}</span>
+                </template>
+              </b-table>
+            </b-card>
+          </div>
         </div>
         <div class="clearfix">&nbsp;</div>
       </b-media>
@@ -91,9 +121,10 @@ export default {
     fetch () {
       let vm = this
       vm.table.data = []
-      let queryVar = this.$route.query
+      let queryVar = {}
 
       queryVar.upc = this.$route.params.upc
+      queryVar.owner = this.$route.query.owner
 
       this.$apollo.query(
         {
@@ -102,7 +133,7 @@ export default {
           fetchPolicy: 'no-cache'
         }
       ).then(function (result) {
-        vm.table.data = result.data.SalesKatalog[0]
+        vm.table.data = result.data.pengaturanBarang[0]
       }).catch(e => {
         if (e.graphQLErrors && Array.isArray(e.graphQLErrors) && e.graphQLErrors.length) {
           e.graphQLErrors.forEach(function (error) {

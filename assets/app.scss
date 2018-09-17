@@ -1,24 +1,26 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500');
 
 // Customize
-$body-bg: #f4f4f4;
-$body-color: #222;
+$body-bg:                    #eee;
+$body-color:                 #12263f;
 
-$enable-rounded: false;
+$enable-rounded:             true;
 
 $theme-colors: (
-  "primary": #28bc83,
-  "danger": #ff4136,
-  "secondary": #e7ebf3
+  "primary":                 #28bc83,
+  "danger":                  #ff4136,
+  "secondary":               #e7ebf3
 );
 
-$border-color:            #e7ebf3 !default;
+$border-color:               #e7ebf3 !default;
 
-$font-family-sans-serif: "Quicksand", sans-serif;
+// FONT
+$font-family-sans-serif:    "Quicksand", sans-serif;
+$font-size-base:            .9375rem;
 
 // FORM
-$input-placeholder-color: #adb5bd !default;
-$custom-file-color:       #adb5bd !default;
+$input-placeholder-color:    #adb5bd !default;
+$custom-file-color:          #adb5bd !default;
 $custom-file-text: (
   en: "Cari"
 ) !default;
@@ -31,7 +33,7 @@ $card-border-color:       #e7ebf3 !default;
 
 // Classes
 * {
-	font-weight: 400;
+    font-weight: 400;
 }
 
 .shadow {

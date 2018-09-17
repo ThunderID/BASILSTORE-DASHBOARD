@@ -10,7 +10,7 @@
         <b-img v-else blank width="75" blank-color="#bbb" tes/>
       </template>
       <template slot="harga" slot-scope="data">
-        <!-- {{ data.value.currency }} {{ data.value.nominal | toCurrency }} -->
+        <span v-if="data.value">{{ data.value.currency }} {{ data.value.nominal | toCurrency }}</span>
       </template>
     </b-table>
   </div>
@@ -76,8 +76,7 @@ export default {
         availableHeaders: [
           { key: 'upc', label: 'UPC', sortable: true },
           { key: 'nama', label: 'Nama', sortable: true },
-          { key: 'thumbnail', label: 'Gambar', sortable: false },
-          { key: 'harga', label: 'Harga', sortable: true }
+          { key: 'thumbnail', label: 'Gambar', sortable: false }
         ]
       }
     }
@@ -101,6 +100,7 @@ export default {
         }
       }
 
+      console.log(queryVar)
       this.$apollo.query(
         {
           query: CatalogQuery,
@@ -108,7 +108,7 @@ export default {
           fetchPolicy: 'no-cache'
         }
       ).then(function (result) {
-        vm.table.data = result.data.SalesKatalog
+        vm.table.data = result.data.pengaturanBarang
       }).catch(e => {
         console.log('gagal')
         if (e.graphQLErrors && Array.isArray(e.graphQLErrors) && e.graphQLErrors.length) {
@@ -130,6 +130,7 @@ export default {
     },
     rowClicked (record, index) {
       let vm = this
+      // console.log(vm.dataFilter)
       vm.$nuxt.$router.replace({path: '/catalog/product/' + record.upc, query: vm.dataFilter})
     }
   }

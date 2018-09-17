@@ -18,10 +18,13 @@
       <b-row>
         <b-col cols="12" md="3" xl="2" class="bg-white border-right border-bottom" style="height: 100vh">
           <b-nav vertical class="py-4">
-            <b-nav-item :to="{ name: 'catalog-product' }" active-class="d-flex" ><i class='material-icons mr-2'>local_grocery_store</i> Produk</b-nav-item>
-            <b-nav-item :to="{ name: 'catalog-promo' }" active-class="d-flex"><i class='material-icons mr-2'>card_giftcard</i> Promo</b-nav-item>
-            <b-nav-item  active-class="d-flex"><i class='material-icons mr-2'>settings</i> Settings</b-nav-item>
-            <b-nav-item  active-class="d-flex"><i class='material-icons mr-2'>insert_drive_file</i> Report</b-nav-item>
+            <b-nav-item :to="{ name: 'catalog-product' }" >Overview</b-nav-item>
+            <b-nav-item :to="{ name: 'catalog-product' }" ><i class="fas fa-box  mr-2"></i> Produk</b-nav-item>
+            <b-nav-item :to="{ name: 'catalog-promo' }" ><i class='fas fa-ribbon mr-2'></i> Promo</b-nav-item>
+            <b-nav-item ><i class='fas fa-cog mr-2'></i> Settings</b-nav-item>
+            <b-nav-item >
+              <i class='fas fa-file mr-2'></i> Report
+            </b-nav-item>
           </b-nav>
         </b-col>
         <b-col>
@@ -35,6 +38,22 @@
 
 <script>
 export default {
-  layout: 'dashboard'
+  layout: 'dashboard',
+  data () {
+    return {
+      selectedStore: {label: 'BALIN DINOYO', value: 'BALINDINOYO'},
+      options: [
+        {label: 'PHD SUHAT', value: 'PHDSUHAT'}, // manufaktur
+        {label: 'PHD BLIMBING', value: 'PHDBLIMBING'}, // manufaktur
+        {label: 'PHD MATOS', value: 'PHDMATOS'}, // manufaktur
+        {label: 'BALIN DINOYO', value: 'BALINDINOYO'}, // retail
+        {label: 'KORAKA DINOYO', value: 'KORAKADINOYO'}, // retail
+        {label: 'TOKOPEDIA', value: 'TOKPED'}, // retail
+        {label: 'PLUIT VILLAGE', value: 'PLUITVILLAGE'},
+        {label: 'PLAZA INDONESIA', value: 'PLAZAINDONESIA'},
+        {label: 'LIPPO BOGOR', value: 'LIPPOBOGOR'}
+      ]
+    }
+  }
 }
 </script>

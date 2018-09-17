@@ -71,6 +71,7 @@ module.exports = {
     // {src: '~/plugins/laravel-validation-trans.js', ssr: false}
     '~/plugins/vue-select.js',
     '~/plugins/vue-js-toggle.js'
+    // '~/plugins/feather-icon.js'
   ],
   router: {
     // linkActiveClass: null
