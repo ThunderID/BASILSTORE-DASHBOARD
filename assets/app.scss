@@ -7,9 +7,8 @@ $body-color:                 #12263f;
 $enable-rounded:             true;
 
 $theme-colors: (
-  "primary":                 #28bc83,
-  "danger":                  #ff4136,
-  "secondary":               #e7ebf3
+  "primary":                 #18d2ac,
+  "danger":                  #ff4136
 );
 
 $border-color:               #e7ebf3 !default;
@@ -52,11 +51,18 @@ $card-border-color:       #e7ebf3 !default;
     }
 }
 
+// MODAL
+.modal-xl {
+  @media (min-width: 1200px) {
+    max-width: 85%;
+  }
+}
+
 
 // Plugins vue-select
-.v-select .dropdown-toggle {
-    @extend .form-control;
-}
+// .v-select .dropdown-toggle {
+//     @extend .form-control;
+// }
 
 // Material Design Icon
 /* Rules for sizing the icon. */

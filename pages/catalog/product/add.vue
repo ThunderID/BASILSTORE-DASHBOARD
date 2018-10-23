@@ -1,17 +1,19 @@
 <template>
-  <div class="container-fluid">
-    <b-button variant="primary mb-3 px-3" :to="'/catalog/product'">Kembali</b-button>
-    <b-card title="Tambah Katalog">
-      <div class='card-text pt-4 box-shadow'>
-        <FormCatalog class='m-t-lg'
-          ref="FormCatalog"
-          :productUPC="$route.query.upc"
-          ownerID="BALIN"
-          @SUCCESS="onUpdateCatalogSuccess" 
-          @FAIL="onUpdateCatalogFail">
-        </FormCatalog>
-      </div>
-    </b-card>
+  <div>
+    <b-container>
+      <b-row class="justify-content-center">
+        <b-col cols="12" md="10">
+          <div class="clearfix">&nbsp;</div>
+          <FormCatalog class='m-t-lg'
+            ref="FormCatalog"
+            :productUPC="$route.query.upc"
+            ownerID="BALIN"
+            @SUCCESS="onUpdateCatalogSuccess" 
+            @FAIL="onUpdateCatalogFail">
+          </FormCatalog>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -22,11 +24,11 @@ export default {
   components: { FormCatalog },
   methods: {
     onUpdateCatalogSuccess (data) {
-      console.log('sukses')
-      // $nuxt.$router.replace('/dashboard')
+      console.log({'sukses': data})
+      // this.$nuxt.$router.replace('/catalog/product')
     },
     onUpdateCatalogFail (data) {
-      console.log('gagal')
+      console.log({'gagal': data})
       // $nuxt.$router.replace('/')
     }
   }

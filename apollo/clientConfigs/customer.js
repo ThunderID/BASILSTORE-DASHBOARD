@@ -9,6 +9,7 @@ export default (ctx) => {
   }
 
   const httpLink = new BatchHttpLink({ uri: 'http://128.199.145.173:8118/graphql' })
+  // const httpLink = new BatchHttpLink({ uri: 'http://localhost:8000/graphql' })
 
   // middleware
   const middlewareLink = new ApolloLink((operation, forward) => {
