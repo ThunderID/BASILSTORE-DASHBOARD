@@ -57,21 +57,38 @@
 
     <b-card title="Opsi" sub-title="pengaturan opsi dari katalog">
       <hr />
-      <div class="card-text pt-3 box-shadow">
-        <b-row v-if="defaultOpsi.length > 0">
+      <div class="card-text box-shadow">
+        <b-row v-if="listOptions.length > 0">
           <b-col cols="12">
-            <table class="table" v-if="listOptions.length > 0">
-              <tr v-for="(list, index) in listOptions">
-                <td>{{list}}</td>
-                <td>{{list.judul}}</td>
-                <td>{{list.bundle}}</td>
-                <td v-if="list.varian.length > 0">{{list.varian}}</td>
-                <td v-else>tidak ada varian</td>
+            <table class="table">
+              <tr>
+                <th class="text-dark border-top-0 border-bottom"><strong>Judul</strong></th>
+                <th class="text-dark border-top-0 border-bottom"><strong>Bundle</strong></th>
+                <th class="text-dark border-top-0 border-bottom"><strong>Varians</strong></th>
+                <th class="text-dark border-top-0 border-bottom"></th>
+              </tr>
+              <tr v-for="(field, index) in listOptions" class="border-bottom" v-if="">
+                <td class="border-0">{{ field.judul }}</td>
+                <td class="border-0">{{ field.bundle }}</td>
+                <td class="border-0" v-if="field.varian.length > 0">
+                  <table v-for="(value, key) in field.varian" class="w-100 pt-1" :class="{'border-bottom' : (field.varian.length - 1) !== key}">
+                    <tr v-for="(value2, key2) in value">
+                      <td class="border-0 p-1">{{ key2 }}</td>
+                      <td class="border-0 p-1">: {{ value2 }}</td>
+                      <!-- <td class="border-0" v-for="(item2, index) in item">{{ index }} <span class="float-right">{{ $item2 }}</span></td> -->
+                    </tr>
+                  </table>
+                </td>
+                <td class="border-0" v-else>belum ada varian</td>
+                <td class="border-0" style="width: 10%">
+                  <b-button variant="link" size="sm" class="text-info" @click="removeOpsi(index)" disabled><i class="fa fa-edit"></i></b-button>
+                  <b-button variant="link" size="sm" class="text-danger" @click="removeOpsi(index)"><i class="fa fa-times"></i></b-button>
+                </td>
               </tr>
             </table>
           </b-col>
         </b-row>
-        <b-row>
+        <b-row class="pt-3">
           <b-col cols="12">
             <b-link class="text-info" v-b-modal.modalOpsi @click="addOpsi"><i class="fa fa-plus mr-1"></i> Opsi Baru</b-link>
           </b-col>
@@ -83,12 +100,12 @@
         <b-row>
           <b-col cols="12" md="6">
             <b-form-group label="Judul">
-              <b-form-input data-vv-name="Judul" v-validate="'required|min:3'" :state="errors.has('Judul')" v-model="options.judul"></b-form-input>
+              <b-form-input data-vv-name="Judul" v-validate="'required|min:3'" :state="errors.has('Judul')" v-model="optionsTemp.judul"></b-form-input>
             </b-form-group>
           </b-col>
           <b-col cols="12" md="2">
             <b-form-group label="Bundle">
-              <b-form-input type="number"  data-vv-name="Bundle" v-validate="'required'" :state="errors.has('Bundle')" v-model="options.bundle"></b-form-input>
+              <b-form-input type="number"  data-vv-name="Bundle" v-validate="'required'" :state="errors.has('Bundle')" v-model="optionsTemp.bundle"></b-form-input>
               <b-form-invalid-feedback :force-show="errors.has('Bundle')">{{ errors.first('Bundle') }}</b-form-invalid-feedback>
             </b-form-group>
           </b-col>
@@ -106,24 +123,24 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(option, index) in defaultVarian">
+                <tr v-for="(varian, index) in variansTemp">
                   <td>
-                    <b-form-input type="text" placeholder="SKU" v-model="option.sku"></b-form-input>
+                    <b-form-input type="text" placeholder="SKU" v-model="varian.sku"></b-form-input>
                   </td>
                   <td>
-                    <b-form-input type="text" placeholder="Parameters" v-model="option.parameters"></b-form-input>
+                    <b-form-input type="text" placeholder="Parameters" v-model="varian.parameters"></b-form-input>
                   </td>
                   <td>
-                    <b-form-input type="text" placeholder="Value" v-model="option.value"></b-form-input>
+                    <b-form-input type="text" placeholder="Value" v-model="varian.value"></b-form-input>
                   </td>
                   <td>
-                    <b-form-input type="text" placeholder="Budle" v-model="option.bundle"></b-form-input>
+                    <b-form-input type="text" placeholder="Budle" v-model="varian.bundle"></b-form-input>
                   </td>
                   <td>
                     <b-button variant="link" class="text-danger" @click="removeVarian(index)"><i class="fa fa-times"></i></b-button>
                   </td>
                 </tr>
-                <tr v-if="defaultVarian.length == 0">
+                <tr v-if="variansTemp.length == 0">
                   <td colspan="5" class="text-center text-secondary">Belum varian</td>
                 </tr>
               </tbody>
@@ -163,92 +180,6 @@
         </b-col>
       </b-row>
     </b-modal>
-        <!-- <b-modal id="modalVarian">
-          <b-form-group label="Kategori">
-            <v-select multiple v-model="category" :options="listCategory" label="slug">
-              <template slot="option" slot-scope="option">
-                {{ option.slug.substring(option.slug.lastIndexOf(",") + 1) }}
-              </template>
-            </v-select>
-            <b-form-invalid-feedback :force-show="errors.has('Kategori')">{{ errors.first('Kategori') }}</b-form-invalid-feedback>
-          </b-form-group>
-        </b-modal> -->
-
-
-        <!-- <div class="clearfix">&nbsp;</div> -->
-        <!-- <div class="clearfix">&nbsp;</div> -->
-
-        <!-- <p class="mb-2"><strong>Daftar Harga</strong></p> -->
-
-        <!-- <b-row v-for="(price, index) in prices" align-v="center">
-          <b-col cols="12" md="12">
-            <span>Harga {{ index + 1 }}</span>
-            <b-link class="text-danger float-right" @click="removePrice(index)"><i class="fa fa-times-circle"></i> Hapus</b-link>
-            <hr class="mt-1 mb-2"/>
-          </b-col>
-          <b-col cols="12" md="11">
-            <b-row>
-              <b-col cols="12" md="6">
-                <b-form-group label="Harga">
-                  <b-form-input data-vv-name="Harga" v-validate="'required'" v-model="price.harga" :state="errors.has('Harga')"></b-form-input>
-                  <b-form-invalid-feedback :force-show="errors.has('Harga')">{{ errors.first('Harga') }}</b-form-invalid-feedback>
-                </b-form-group>
-              </b-col>
-              <b-col cols="12" md="6">
-                <b-form-group label="Mulai">
-                  <b-form-input data-vv-name="Mulai" v-validate="'required'" v-model="price.mulai" :state="errors.has('Mulai')"></b-form-input>
-                  <b-form-invalid-feedback :force-show="errors.has('Mulai')">{{ errors.first('Mulai') }}</b-form-invalid-feedback>
-                </b-form-group>
-              </b-col>
-            </b-row>
-            <b-row>
-              <b-col cols="12" md="3">
-                <b-form-group label="Satuan">
-                  <b-form-input data-vv-name="Satuan" v-validate="'required'" v-model="price.penetapan.satuan" :state="errors.has('Satuan')"></b-form-input>
-                  <b-form-invalid-feedback :force-show="errors.has('Satuan')">{{ errors.first('Satuan') }}</b-form-invalid-feedback>
-                </b-form-group>
-              </b-col>
-              <b-col cols="12" md="3">
-                <b-form-group label="Bundle">
-                  <b-form-input type="number" data-vv-name="Bundle" v-validate="'required'" v-model="price.penetapan.bundle" :state="errors.has('Bundle')"></b-form-input>
-                  <b-form-invalid-feedback :force-show="errors.has('Bundle')">{{ errors.first('Bundle') }}</b-form-invalid-feedback>
-                </b-form-group>
-              </b-col>
-              <b-col cols="12" md="6">
-                <b-form-group label="Berlaku">
-                  <v-select v-model="price.berlaku" :options="['BALINDINOYO','KORAKA']" multiple></v-select>
-                  <b-form-invalid-feedback :force-show="errors.has('Berlaku')">{{ errors.first('Berlaku') }}</b-form-invalid-feedback>
-                </b-form-group>
-              </b-col>
-            </b-row>
-          </b-col>
-          <div class="clearfix">&nbsp;</div>
-          <div class="clearfix">&nbsp;</div>
-        </b-row> -->
-
-        <!-- <b-row> -->
-          <!-- <b-col cols="12"> -->
-            <!-- <b-link class="text-info" @click="addPrice"><i class="fa fa-plus-circle mr-1"></i> Harga</b-link> -->
-            <!-- <b-button variant="info px-3" size="sm" @click="addPrice"><i class="fa fa-plus-circle mr-1"></i> Harga</b-button> -->
-          <!-- </b-col> -->
-        <!-- </b-row> -->
-      
-        <!-- <div class="clearfix">&nbsp;</div> -->
-        <!-- <div class="clearfix">&nbsp;</div> -->
-
-        <!-- <b-form-group label="Toko">
-          <b-form-input data-vv-name="Toko" v-validate="'required|min:3'" v-model="form.toko" :state="errors.has('Toko')"></b-form-input>
-          <b-form-invalid-feedback :force-show="errors.has('Toko')">{{ errors.first('Toko') }}</b-form-invalid-feedback>
-        </b-form-group> -->
-
-        <!-- <div class="clearfix">&nbsp;</div> -->
-
-        <!-- <b-form-group label="Promo">
-          <b-form-input data-vv-name="Promo" v-validate="'required|min:3'" v-model="form.promo" :state="errors.has('Promo')"></b-form-input>
-          <b-form-invalid-feedback :force-show="errors.has('Promo')">{{ errors.first('Promo') }}</b-form-invalid-feedback>
-        </b-form-group> -->
-      </div>
-    </b-card>
 
     <div class="clearfix">&nbsp;</div>
     
@@ -331,7 +262,9 @@ export default {
       category: [],
       listCategory: [],
       options: [],
-      varian: [],
+      optionsTemp: [],
+      varians: [],
+      variansTemp: [],
       isLoading: false,
       isCounter: 0
     }
@@ -354,44 +287,48 @@ export default {
       }
     },
     listOptions: function () {
-      return this.varian[0]
+      return this.options
     }
   },
   methods: {
     addVarian () {
-      this.options.varian.push({
+      this.variansTemp.push({
         sku: '',
         parameters: '',
         value: '',
         bundle: ''
       })
     },
-    removeVarian (index) {
-      this.options.splice((index - 1), 1)
+    removeVarian (idx) {
+      this.variansTemp.splice((idx - 1), 1)
     },
     addOpsi () {
-      this.options.push({
+      this.optionsTemp.push({
         judul: '',
         bundle: '',
         varian: []
       })
     },
+    editOpsi (idx) {
+
+    },
     updateOpsi (evt) {
+      let vm = this
       // evt.preventDefault()
-      if (this.options.judul !== '') {
-        console.log({1: this.options[0], 2: this.varian})
-        this.varian.push({
-          judul: this.options[0].judul,
-          bundle: this.options[0].bundle,
-          varian: this.options[0].varian
+      if (vm.optionsTemp.judul !== '') {
+        this.options.push({
+          judul: this.optionsTemp.judul,
+          bundle: this.optionsTemp.bundle,
+          varian: this.variansTemp
         })
-        // this.defaultOpsi = this.options[0]
-        // this.defaultOpsi.varian.push(this.defaultVarian)
-        this.options = []
+        this.optionsTemp = []
+        this.variansTemp = []
         this.$root.$emit('close')
-        console.log({1: this.options[0], 2: this.varian})
-      } else {
+        console.log(this.variansTemp)
       }
+    },
+    removeOpsi (idx) {
+      this.options.splice((idx - 1), 1)
     },
     getHarga (data) {
       console.log(data)

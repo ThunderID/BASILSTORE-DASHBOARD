@@ -51,21 +51,23 @@
         <tr>
           <th>Nominal</th>
           <th>Mulai - Hingga</th>
-          <th>Penetepan (jumlah/satuan)</th>
+          <th>Penetepan <br/>(jumlah/satuan)</th>
           <th>Berlaku</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(price, index) in defaultHarga">
-          <td contenteditable="true" placeholder="Nominal"></td>
+          <td><b-form-input type="text" placeholder="" ></b-form-input></td>
           <td>
-            <span contenteditable="true"></span> - <span contenteditable="true"></span>
+            <b-form-input type="text" placeholder="" ></b-form-input> -
+            <b-form-input type="text" placeholder="" ></b-form-input>
           </td>
           <td>
-            <span contenteditable="true"></span> &#47; <span contenteditable="true"></span>
+            <b-form-input type="text" placeholder="" ></b-form-input> /
+            <b-form-input type="text" placeholder="" ></b-form-input>
           </td>
-          <td contenteditable="true">
+          <td>
             <v-select v-model="price.berlaku" :options="['BALINDINOYO','KORAKA']" multiple></v-select>
             <b-form-invalid-feedback :force-show="errors.has('Berlaku')">{{ errors.first('Berlaku') }}</b-form-invalid-feedback>
           </td>
