@@ -1,8 +1,0 @@
-mutation SetRoleToMember($input: InputSetRoleToMember) {
-	SetRoleToMember(input: $input) {
-		id,
-		name,
-		username,
-		roles
-	}
-}

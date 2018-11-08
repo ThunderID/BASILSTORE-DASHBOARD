@@ -9,22 +9,23 @@
     <LoginForm class='m-t-lg' @SUCCESS="onLoginSuccess" @FAIL="onLoginFail"></LoginForm>
     
     <p class='mt-2'>
-      <nuxt-link to="/register">Register</nuxt-link> &nbsp;·&nbsp;
+      <nuxt-link to="/register">Daftar</nuxt-link> &nbsp;·&nbsp;
       <nuxt-link to="/forget-password">Lupa Password</nuxt-link>
     </p>
   </div>
 </template>
 
 <script>
-import LoginForm from '~/components/auth/login/form'
+import LoginForm from '~/components/auth/form/login'
 export default {
   components: { LoginForm },
   methods: {
     onLoginSuccess (data) {
-      // $nuxt.$router.replace('/dashboard')
+      this.$store.dispatch('authentication/login', {user: data.user, token: data.token})
+      this.$nuxt.$router.replace('/dashboard')
     },
     onLoginFail (data) {
-      // $nuxt.$router.replace('/')
+      this.$nuxt.$router.replace('/')
     }
   }
 }

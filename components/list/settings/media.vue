@@ -12,8 +12,8 @@
 	    	<h3>Nama File : {{dd.Key}} </h3>
 	    	<p>Size : {{dd.Size}} Bytes <br/>
 	    	Last Modified : {{ dd.LastModified }} <br/>
-	    	Share Url : https://FLYBIRD-space.sgp1.digitaloceanspaces.com/{{dd.Key}}
-	    	<v-btn small color="primary" style="min-width:44px !important; min-height:36px !important" v-clipboard:copy='"https://FLYBIRD-space.sgp1.digitaloceanspaces.com/"+dd.Key' @click="copyLink(dd.Key)">COPY</v-btn>
+	    	Share Url : https://BASILSTORE-space.sgp1.digitaloceanspaces.com/{{dd.Key}}
+	    	<v-btn small color="primary" style="min-width:44px !important; min-height:36px !important" v-clipboard:copy='"https://BASILSTORE-space.sgp1.digitaloceanspaces.com/"+dd.Key' @click="copyLink(dd.Key)">COPY</v-btn>
 	    	<v-btn small color="primary" style="min-width:44px !important; min-height:36px !important" @click="deleteFile(dd.Key)">DELETE</v-btn>
 	    	</p>
 	    </li>

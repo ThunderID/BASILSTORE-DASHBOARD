@@ -1,0 +1,6 @@
+mutation authenticate($input: ILogin) {
+	authenticate(input: $input) {
+		user {name, username},
+		token
+	}
+}
