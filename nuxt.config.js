@@ -6,11 +6,11 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'DAZZBOR - by Thunderlab',
+    title: 'BASILSTORE - Admin Dashboard - by Thunderlab',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'DAZZBOR' }
+      { hid: 'description', name: 'description', content: 'BASILSTORE' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -21,11 +21,11 @@ module.exports = {
     ]
   },
   env: {
-    appName: 'DAZZBOR - by Thunderlab',
+    appName: 'BASILSTORE - Admin Dashboard - by Thunderlab',
     locale: 'id',
-    // api: {
-      // url: 'https://api.dazzbor.org/'
-    // },
+    api: {
+      url: 'http://128.199.145.173:8118'
+    },
     lang: {
       id: {
         login: {
@@ -61,7 +61,7 @@ module.exports = {
       accessKeyId: 'NFMPT4P5HNJOGY6FNCYB',
       secretAccessKey: 'hPjSpPYRoMCo5X80QoxtqB43OLF2yJiXTWp2A9PdM3k',
       spacesEndpoint: 'sgp1.digitaloceanspaces.com',
-      Bucket: 'DAZZBOR'
+      Bucket: 'BASILSTORE'
     }
   },
   mode: 'spa',
@@ -106,7 +106,7 @@ module.exports = {
     includeNodeModules: true
   },
   proxy: [
-    'https://api.dazzbor.org/graphql'
+    'https://api.BASILSTORE.org/graphql'
   ],
   /*
   ** Build configuration

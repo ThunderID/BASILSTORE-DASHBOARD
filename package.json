@@ -1,7 +1,7 @@
 {
-  "name": "FLYBIRD",
+  "name": "BASILSTORE",
   "version": "1.0.0",
-  "description": "FLYBIRD",
+  "description": "BASILSTORE",
   "author": "Erick Mo <mo@thunderlab.id>",
   "private": true,
   "config": {
@@ -15,7 +15,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "prod": "pm2 start npm ecosystem.config.js --name flybird-dashboard -- start",
+    "prod": "pm2 start npm ecosystem.config.js --name BASILSTORE-dashboard -- start",
     "build-css": "node-sass assets -o static/css  --output-style compressed",
     "watch-css": "node-sass -wr assets -o static/css --output-style compressed",
     "precommit": "npm run lint"

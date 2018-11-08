@@ -28,15 +28,15 @@
           <v-card-text>
             <v-text-field 
               type="text" 
-              name="FLYBIRD_why" 
+              name="BASILSTORE_why" 
               label="why" 
               textarea
               auto-grow
               counter=20000
               cols="15"
-              v-model="formData['FLYBIRD_why']"
-              :error="errorMessages['FLYBIRD_why'] && errorMessages['FLYBIRD_why'].length > 0" 
-              :error-messages="this.translate(errorMessages['FLYBIRD_why'])" 
+              v-model="formData['BASILSTORE_why']"
+              :error="errorMessages['BASILSTORE_why'] && errorMessages['BASILSTORE_why'].length > 0" 
+              :error-messages="this.translate(errorMessages['BASILSTORE_why'])" 
               placeholder=" " 
               v-validate="'required'">
             </v-text-field>
@@ -45,15 +45,15 @@
           <v-card-text>
             <v-text-field 
               type="text" 
-              name="FLYBIRD_about" 
+              name="BASILSTORE_about" 
               label="about" 
               textarea
               auto-grow
               counter=20000
               cols="15"
-              v-model="formData['FLYBIRD_about']"
-              :error="errorMessages['FLYBIRD_about'] && errorMessages['FLYBIRD_about'].length > 0" 
-              :error-messages="this.translate(errorMessages['FLYBIRD_about'])" 
+              v-model="formData['BASILSTORE_about']"
+              :error="errorMessages['BASILSTORE_about'] && errorMessages['BASILSTORE_about'].length > 0" 
+              :error-messages="this.translate(errorMessages['BASILSTORE_about'])" 
               placeholder=" " 
               v-validate="'required'">
             </v-text-field>
@@ -106,7 +106,7 @@ export default {
     // ------------------------------ MODIFY HERE ----------------------------------
     record: {
       type: Object,
-      default: {ee_history: 'ee_history', FLYBIRD_why: 'FLYBIRD_why', FLYBIRD_about: 'FLYBIRD_about', contact_us: 'contact_us'}
+      default: {ee_history: 'ee_history', BASILSTORE_why: 'BASILSTORE_why', BASILSTORE_about: 'BASILSTORE_about', contact_us: 'contact_us'}
     },
     min_publish: {
       type: String,
@@ -118,7 +118,7 @@ export default {
     return {
       errorMessages: {},
       isSubmitting: false,
-      formData: {ee_history: this.record.ee_history, FLYBIRD_why: this.record.FLYBIRD_why, FLYBIRD_about: this.record.FLYBIRD_about, contact_us: this.record.contact_us},
+      formData: {ee_history: this.record.ee_history, BASILSTORE_why: this.record.BASILSTORE_why, BASILSTORE_about: this.record.BASILSTORE_about, contact_us: this.record.contact_us},
       // ------------------------------ MODIFY HERE ----------------------------------
       GQL: {
         data: 'UpdateAbout'
@@ -137,8 +137,8 @@ export default {
       return {
         input: {
           ee_history: this.formData.ee_history,
-          FLYBIRD_why: this.formData.FLYBIRD_why,
-          FLYBIRD_about: this.formData.FLYBIRD_about,
+          BASILSTORE_why: this.formData.BASILSTORE_why,
+          BASILSTORE_about: this.formData.BASILSTORE_about,
           contact_us: this.formData.contact_us
         }
       }
@@ -146,8 +146,8 @@ export default {
     transformedErrors: function () {
       let errors = {
         ee_history: this.translate(this.errorMessages.ee_history, {ee_history: 'ee_history'}),
-        FLYBIRD_why: this.translate(this.errorMessages.FLYBIRD_why, {FLYBIRD_why: 'FLYBIRD_why'}),
-        FLYBIRD_about: this.translate(this.errorMessages.FLYBIRD_about, {FLYBIRD_about: 'FLYBIRD_about'}),
+        BASILSTORE_why: this.translate(this.errorMessages.BASILSTORE_why, {BASILSTORE_why: 'BASILSTORE_why'}),
+        BASILSTORE_about: this.translate(this.errorMessages.BASILSTORE_about, {BASILSTORE_about: 'BASILSTORE_about'}),
         contact_us: this.translate(this.errorMessages.contact_us, {contact_us: 'contact_us'})
       }
       return errors
@@ -160,7 +160,7 @@ export default {
   },
   methods: {
     reset () {
-      this.formData = {ee_history: this.record.ee_history, FLYBIRD_why: this.record.FLYBIRD_why, FLYBIRD_about: this.record.FLYBIRD_about, contact_us: this.record.contact_us}
+      this.formData = {ee_history: this.record.ee_history, BASILSTORE_why: this.record.BASILSTORE_why, BASILSTORE_about: this.record.BASILSTORE_about, contact_us: this.record.contact_us}
       this.errorMessages = {}
       // ------------------------------ MODIFY HERE ----------------------------------
       // ------------------------------ END MODIFY HERE ------------------------------
@@ -219,9 +219,9 @@ export default {
                           vm.errorMessages['ee_history'] = econt
                           break
 
-                        case 'input.FLYBIRD_why':
-                          for (i = 0; i < error.input['input.FLYBIRD_why'].length; i++) {
-                            tidx = error.input['input.FLYBIRD_why'][i].split('|')
+                        case 'input.BASILSTORE_why':
+                          for (i = 0; i < error.input['input.BASILSTORE_why'].length; i++) {
+                            tidx = error.input['input.BASILSTORE_why'][i].split('|')
 
                             if (process.env.errors_lib[tidx[0]]) {
                               econt = econt + ' ' + process.env.errors_lib[tidx[0]].replace(':attribute', 'why')
@@ -234,12 +234,12 @@ export default {
                             }
                           }
 
-                          vm.errorMessages['FLYBIRD_why'] = econt
+                          vm.errorMessages['BASILSTORE_why'] = econt
                           break
 
-                        case 'input.FLYBIRD_about':
-                          for (i = 0; i < error.input['input.FLYBIRD_about'].length; i++) {
-                            tidx = error.input['input.FLYBIRD_about'][i].split('|')
+                        case 'input.BASILSTORE_about':
+                          for (i = 0; i < error.input['input.BASILSTORE_about'].length; i++) {
+                            tidx = error.input['input.BASILSTORE_about'][i].split('|')
 
                             if (process.env.errors_lib[tidx[0]]) {
                               econt = econt + ' ' + process.env.errors_lib[tidx[0]].replace(':attribute', 'about')
@@ -252,7 +252,7 @@ export default {
                             }
                           }
 
-                          vm.errorMessages['FLYBIRD_about'] = econt
+                          vm.errorMessages['BASILSTORE_about'] = econt
                           break
 
                         case 'input.contact_us':

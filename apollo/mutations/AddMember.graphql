@@ -1,7 +1,0 @@
-mutation AddMember($input: InputAddMember) {
-	AddMember(input: $input) {
-		id,
-		name,
-		username
-	}
-}

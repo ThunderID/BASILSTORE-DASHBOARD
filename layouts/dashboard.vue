@@ -24,7 +24,7 @@
         <!-- Right -->
         <b-navbar-nav class='ml-auto px-3'>
           <b-nav-item><i class="material-icons">apps</i> </b-nav-item>
-          <b-nav-item-dropdown right text="My Account">
+          <b-nav-item-dropdown right :text=nama>
             <b-dropdown-item :to="'dashboard/my-account/update-profile'">Update Profile</b-dropdown-item>
             <b-dropdown-item :to="'dashboard/my-account/update-password'">Update Password</b-dropdown-item>
             <b-dropdown-item :to="'/'">Logout</b-dropdown-item>
@@ -43,3 +43,13 @@ body {
   border-top:2px solid #28bc83;
 }
 </style>
+
+<script>
+export default {
+  data () {
+    return {
+      nama: this.$store.state.authentication.me.name
+    }
+  }
+}
+</script>

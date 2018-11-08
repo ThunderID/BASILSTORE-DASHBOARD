@@ -1,5 +1,7 @@
 <template>
-  <nuxt-child/>
+  <div class="text-center">
+  	WELCOME {{ $store.state.authentication.me.name }}
+  </div>
 </template>
 
 <script>
