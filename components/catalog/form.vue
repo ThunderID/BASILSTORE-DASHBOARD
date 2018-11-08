@@ -35,6 +35,7 @@
 
     <div class="clearfix">&nbsp;</div>
 
+    <!-- = COMPONENNT KATEGORI KATALOG ======================= -->
     <b-card title="Kategori" sub-title="pengaturan kategori dari katalog">
       <hr />
       <div class="card-text pt-3 box-shadow">
@@ -55,6 +56,7 @@
 
     <div class="clearfix">&nbsp;</div>
 
+    <!-- = COMPONENNT OPSI KATALOG ======================= -->
     <b-card title="Opsi" sub-title="pengaturan opsi dari katalog">
       <hr />
       <div class="card-text box-shadow">
@@ -69,18 +71,17 @@
               </tr>
               <tr v-for="(field, index) in listOptions" class="border-bottom" v-if="">
                 <td class="border-0">{{ field.judul }}</td>
-                <td class="border-0">{{ field.bundle }}</td>
+                <td class="border-0">{{ field.bundle ? field.bundle : '-' }}</td>
                 <td class="border-0" v-if="field.varian.length > 0">
                   <table v-for="(value, key) in field.varian" class="w-100 pt-1" :class="{'border-bottom' : (field.varian.length - 1) !== key}">
                     <tr v-for="(value2, key2) in value">
                       <td class="border-0 p-1">{{ key2 }}</td>
                       <td class="border-0 p-1">: {{ value2 }}</td>
-                      <!-- <td class="border-0" v-for="(item2, index) in item">{{ index }} <span class="float-right">{{ $item2 }}</span></td> -->
                     </tr>
                   </table>
                 </td>
-                <td class="border-0" v-else>belum ada varian</td>
-                <td class="border-0" style="width: 10%">
+                <td class="border-0" v-else>-</td>
+                <td class="border-0 text-right" style="width: 15%">
                   <b-button variant="link" size="sm" class="text-info" @click="removeOpsi(index)" disabled><i class="fa fa-edit"></i></b-button>
                   <b-button variant="link" size="sm" class="text-danger" @click="removeOpsi(index)"><i class="fa fa-times"></i></b-button>
                 </td>
@@ -95,17 +96,18 @@
         </b-row>
       </div>
     </b-card>
-    <b-modal id="modalOpsi" title="Tambah Opsi Baru" size="lg" @ok="updateOpsi" ok-title="Simpan" no-close-on-backdrop>
+    <!-- = MODAL OPSI ======================= -->
+    <b-modal id="modalOpsi" title="Tambah Opsi Baru" size="lg" @ok="updateOpsi" ok-title="Simpan" no-close-on-backdrop no-close-on-esc>
       <b-container fluid>
         <b-row>
           <b-col cols="12" md="6">
             <b-form-group label="Judul">
-              <b-form-input data-vv-name="Judul" v-validate="'required|min:3'" :state="errors.has('Judul')" v-model="optionsTemp.judul"></b-form-input>
+              <b-form-input data-vv-name="Judul" v-model="optionsTemp.judul"></b-form-input>
             </b-form-group>
           </b-col>
           <b-col cols="12" md="2">
             <b-form-group label="Bundle">
-              <b-form-input type="number"  data-vv-name="Bundle" v-validate="'required'" :state="errors.has('Bundle')" v-model="optionsTemp.bundle"></b-form-input>
+              <b-form-input type="number"  data-vv-name="Bundle" v-model="optionsTemp.bundle"></b-form-input>
               <b-form-invalid-feedback :force-show="errors.has('Bundle')">{{ errors.first('Bundle') }}</b-form-invalid-feedback>
             </b-form-group>
           </b-col>
@@ -124,21 +126,11 @@
               </thead>
               <tbody>
                 <tr v-for="(varian, index) in variansTemp">
-                  <td>
-                    <b-form-input type="text" placeholder="SKU" v-model="varian.sku"></b-form-input>
-                  </td>
-                  <td>
-                    <b-form-input type="text" placeholder="Parameters" v-model="varian.parameters"></b-form-input>
-                  </td>
-                  <td>
-                    <b-form-input type="text" placeholder="Value" v-model="varian.value"></b-form-input>
-                  </td>
-                  <td>
-                    <b-form-input type="text" placeholder="Budle" v-model="varian.bundle"></b-form-input>
-                  </td>
-                  <td>
-                    <b-button variant="link" class="text-danger" @click="removeVarian(index)"><i class="fa fa-times"></i></b-button>
-                  </td>
+                  <td><b-form-input type="text" placeholder="SKU" v-model="varian.sku"></b-form-input></td>
+                  <td><b-form-input type="text" placeholder="Parameters" v-model="varian.parameter"></b-form-input></td>
+                  <td><b-form-input type="text" placeholder="Value" v-model="varian.value"></b-form-input></td>
+                  <td><b-form-input type="text" placeholder="Budle" v-model="varian.bundle"></b-form-input></td>
+                  <td><b-button variant="link" class="text-danger" @click="removeVarian(index)"><i class="fa fa-times"></i></b-button></td>
                 </tr>
                 <tr v-if="variansTemp.length == 0">
                   <td colspan="5" class="text-center text-secondary">Belum varian</td>
@@ -154,31 +146,50 @@
           </b-col>
         </b-row>
       </b-container>
-      <!-- <div slot="modal-footer" class="w-100">
-        <b-button variant="primary" class="float-right" @click="updateOpsi">Simpan</b-button>
-      </div> -->
     </b-modal>
     
     <div class="clearfix">&nbsp;</div>
 
+    <!-- = COMPONENNT HARGA KATALOG ======================= -->
     <b-card title="Harga" sub-title="pengaturan harga dari katalog">
       <hr />
-      <div class="card-text pt-3 box-shadow">
-        <b-row>
+      <div class="card-text box-shadow">
+        <b-row v-if="listPrices.length > 0">
           <b-col cols="12">
-            <b-link class="text-info" v-b-modal.modalHarga><i class="fa fa-plus-circle mr-1"></i> Harga Baru</b-link>
+            <table class="table">
+              <tr>
+                <th class="text-dark border-top-0 border-bottom"><strong>Harga</strong></th>
+                <th class="text-dark border-top-0 border-bottom text-center"><strong>Mulai</strong> - <strong>Berakhir</strong></th>
+                <th class="text-dark border-top-0 border-bottom text-center"><strong>Satuan (Bundle)</strong></th>
+                <th class="text-dark border-top-0 border-bottom"><strong>Berlaku</strong></th>
+                <th class="text-dark border-top-0 border-bottom"></th>
+              </tr>
+              <tr v-for="(field, index) in listPrices" class="border-bottom">
+                <td class="border-0">{{field.harga.currency}} {{field.harga.nominal}}</td>
+                <td class="border-0 text-center">{{field.mulai}} - {{field.hingga}}</td>
+                <td class="border-0 text-center">{{field.penetapan.satuan}} ({{field.penetapan.bundle}})</td>
+                <td class="border-0">
+                  <span v-for="(field2, index2) in field.berlaku">{{field2}}, </span>
+                </td>
+                <td class="border-0 text-right" style="width: 15%">
+                  <b-button variant="link" size="sm" class="text-info" @click="removePrice(index)" disabled><i class="fa fa-edit"></i></b-button>
+                  <b-button variant="link" size="sm" class="text-danger" @click="removePrice(index)"><i class="fa fa-times"></i></b-button>
+                </td>
+              </tr>
+            </table>
+          </b-col>
+
+        </b-row>
+        <b-row class="pt-3">
+          <b-col cols="12">
+            <b-link class="text-info" v-b-modal.modalHarga @click="showModalHarga"><i class="fa fa-plus mr-1"></i> Harga Baru</b-link>
           </b-col>
         </b-row>
       </div>
     </b-card>
-    <b-modal id="modalHarga" title="Tambah Harga Baru" size="xl" hide-footer no-close-on-backdrop>
-      <b-row>
-        <b-col cols="12">
-          <FormHarga
-            @Harga="getHarga">
-          </FormHarga>
-        </b-col>
-      </b-row>
+    
+    <b-modal ref="modalHarga" id="modalHarga" title="Tambah Harga Baru" hide-footer no-close-on-backdrop no-close-on-esc body-class="px-0" ok-title="Simpan" :showModal="showModalHarga">
+      <ModalHarga v-on:HARGA="getHarga" @HIDE="hideModalHarga" :showModal="showModal"></ModalHarga>
     </b-modal>
 
     <div class="clearfix">&nbsp;</div>
@@ -209,7 +220,7 @@ import AddCatalog from '~/apollo/mutations/AddCatalog'
 
 // component
 import FormVarian from '~/components/catalog/product/form/opsi'
-import FormHarga from '~/components/catalog/product/form/harga'
+import ModalHarga from '~/components/catalog/product/form/harga'
 
 export default {
   props: {
@@ -240,7 +251,7 @@ export default {
       }
     }
   },
-  components: { FormVarian, FormHarga },
+  components: { FormVarian, ModalHarga },
   apollo: {
     // -----------------------------------------------------------------------------------------------------------------------
     // TO MODIFY
@@ -258,22 +269,17 @@ export default {
         nama: '',
         kode_owner: ''
       },
-      prices: [],
       category: [],
       listCategory: [],
       options: [],
       optionsTemp: [],
+      prices: [],
       varians: [],
       variansTemp: [],
       isLoading: false,
-      isCounter: 0
+      isCounter: 0,
+      showModal: false
     }
-  },
-  watch: {
-    // options: this.defaultOpsi
-    // listOptions: function () {
-    //   return this.defaultOpsi
-    // }
   },
   mounted () {
     this.loadCategory()
@@ -288,13 +294,23 @@ export default {
     },
     listOptions: function () {
       return this.options
+    },
+    listPrices: function () {
+      return this.prices
     }
   },
   methods: {
+    hideModalHarga () {
+      this.$refs.modalHarga.hide()
+      this.showModal = false
+    },
+    showModalHarga () {
+      this.showModal = true
+    },
     addVarian () {
       this.variansTemp.push({
         sku: '',
-        parameters: '',
+        parameter: '',
         value: '',
         bundle: ''
       })
@@ -310,7 +326,6 @@ export default {
       })
     },
     editOpsi (idx) {
-
     },
     updateOpsi (evt) {
       let vm = this
@@ -323,25 +338,17 @@ export default {
         })
         this.optionsTemp = []
         this.variansTemp = []
-        this.$root.$emit('close')
-        console.log(this.variansTemp)
       }
     },
     removeOpsi (idx) {
       this.options.splice((idx - 1), 1)
     },
     getHarga (data) {
-      console.log(data)
-    },
-    addPrice () {
-      this.prices.push({
-        harga: '',
-        mulai: '',
-        penetapan: {
-          satuan: '',
-          bundle: ''
-        }
-      })
+      if (data && data.length !== 0) {
+        this.prices.push(data)
+        this.$refs.modalHarga.hide()
+        // console.log({1: data, 2: this.prices})
+      }
     },
     removePrice (index) {
       this.prices.splice((index - 1), 1)
@@ -369,12 +376,11 @@ export default {
       let vm = this
 
       e.preventDefault()
-      console.log(vm)
       vm.isLoading = true
       vm.$validator.validateAll()
-
       if (vm.errors.count() === 0) {
-        vm.form.kode_owner = 'BALIN'
+        console.log('yes submit')
+        vm.form.kode_owner = 'ninja@basil.id'
         vm.$apollo.mutate({
           mutation: AddCatalog,
           variables: {
@@ -397,6 +403,8 @@ export default {
           vm.isLoading = false
         })
       } else {
+        console.log('gagal submit')
+        console.log(vm.errors)
         vm.isLoading = false
       }
     }

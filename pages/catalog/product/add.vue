@@ -7,7 +7,7 @@
           <FormCatalog class='m-t-lg'
             ref="FormCatalog"
             :productUPC="$route.query.upc"
-            ownerID="BALIN"
+            ownerID="ninja@basil.id"
             @SUCCESS="onUpdateCatalogSuccess" 
             @FAIL="onUpdateCatalogFail">
           </FormCatalog>

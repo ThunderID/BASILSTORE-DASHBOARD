@@ -46,7 +46,7 @@
       <div class="clearfix">&nbsp;</div>
     </b-row> -->
 
-    <table class="table">
+    <!-- <table class="table">
       <thead>
         <tr>
           <th>Nominal</th>
@@ -76,14 +76,64 @@
           </td>
         </tr>
       </tbody>
-    </table>
-
-    <b-row>
-      <b-col cols="12">
-        <b-link class="text-info" @click="addPrice"><i class="fa fa-plus-circle mr-1"></i> Harga Baru</b-link>
-          <!-- <b-button variant="info px-3" size="sm" @click="addPrice"><i class="fa fa-plus-circle mr-1"></i> Harga Baru</b-button> -->
-      </b-col>
-    </b-row>
+    </table> -->
+    <!-- <b-modal id="modalHarga" title="Tambah Harga Baru" no-close-on-backdrop no-close-on-esc body-class="px-0" ok-title="Simpan" @ok="addHarga" @show="onShow"> -->
+      <b-container class="px-4">
+        <b-row>
+          <b-col cols="12" md="4">
+            <b-form-group label="Currency">
+              <b-form-input data-vv-name="Currency" v-validate="'required|min:3'" :state="errors.has('Currency')" v-model="hargaTemp.harga.currency"></b-form-input>
+            </b-form-group>
+          </b-col>
+          <b-col cols="12" md="8">
+            <b-form-group label="Nominal">
+              <b-form-input data-vv-name="Nominal" v-validate="'required|min:3'" :state="errors.has('Nominal')" v-model="hargaTemp.harga.nominal"></b-form-input>
+            </b-form-group>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col cols="12" md="6">
+            <b-form-group label="Mulai">
+              <b-form-input data-vv-name="Mulai" v-model="hargaTemp.mulai"></b-form-input>
+              <b-form-invalid-feedback :force-show="errors.has('Mulai')">{{ errors.first('Mulai') }}</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+          <b-col cols="12" md="6">
+            <b-form-group label="Hingga">
+              <b-form-input data-vv-name="Hingga" v-model="hargaTemp.hingga"></b-form-input>
+              <b-form-invalid-feedback :force-show="errors.has('Hingga')">{{ errors.first('Hingga') }}</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col cols="12" md="7">
+            <b-form-group label="Satuan">
+              <b-form-input v-model="hargaTemp.penetapan.satuan"></b-form-input>
+              <b-form-invalid-feedback :force-show="errors.has('Satuan')">{{ errors.first('Satuan') }}</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+          <b-col cols="12" md="5">
+            <b-form-group label="Bundle">
+              <b-form-input v-model="hargaTemp.penetapan.bundle"></b-form-input>
+              <b-form-invalid-feedback :force-show="errors.has('Bundle')">{{ errors.first('Bundle') }}</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col cols="12" md="12">
+            <b-form-group label="Berlaku di toko/cabang">
+              <v-select v-model="hargaTemp.berlaku" :options="['BALINDINOYO','KORAKA']" multiple></v-select>
+              <b-form-invalid-feedback :force-show="errors.has('Berlaku')">{{ errors.first('Berlaku') }}</b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+      </b-container>
+    <!-- </b-modal> -->
+    <div class="clearfix">&nbsp;</div>
+    <div slot="modal-footer" class="modal-footer">
+        <b-btn variant="link" @click="hideModal">Cancel</b-btn>
+        <b-btn variant="primary" @click="addHarga">Save Changes</b-btn>
+    </div>
   </div>
 </template>
 
@@ -96,24 +146,64 @@ export default {
       default: function () {
         return []
       }
+    },
+    showModal: {
+      type: Boolean,
+      default: function () {
+        return false
+      }
     }
   },
-  methods: {
-    addPrice () {
-      this.defaultHarga.push({
-        harga: 0,
-        mulai: '',
+  data () {
+    return {
+      hargaTemp: {
+        harga: {
+          nominal: '30000',
+          currency: 'IDR'
+        },
+        mulai: '22/11/2018',
+        hingga: '29/11/2018',
         penetapan: {
-          satuan: '',
-          bundle: 0
-        }
-      })
-      this.$emit('HARGA', this.defaultHarga)
+          satuan: 'set',
+          bundle: '1'
+        },
+        berlaku: []
+      },
+      harga: []
+    }
+  },
+  computed: {
+  },
+  methods: {
+    hideModal () {
+      this.$emit('HIDE', true)
+    },
+    onShow (evt) {
+      // this.clearHarga()
+    },
+    addHarga (evt) {
+      if (!this.hargaTemp.harga) {
+      } else {
+        this.harga.push(this.hargaTemp)
+        console.log(this.harga)
+        this.$emit('HARGA', this.hargaTemp)
+      }
     },
     removePrice (index) {
-      // console.log({1: 'yes', 2: index})
-      this.defaultHarga.splice((index - 1), 1)
+      this.hargaTemp.splice((index - 1), 1)
+    },
+    clearHarga () {
+      this.hargaTemp.harga.nominal = ''
+      this.hargaTemp.harga.currency = ''
+      this.hargaTemp.mulai = ''
+      this.hargaTemp.hingga = ''
+      this.hargaTemp.penetapan.satuan = ''
+      this.hargaTemp.penetapan.bundle = ''
+      this.hargaTemp.berlaku = []
     }
+  },
+  beforeMount () {
+    console.log('yes sblm mount')
   }
 }
 </script>

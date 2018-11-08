@@ -13,7 +13,7 @@
     </b-row>
     <b-row align-h="between">
       <b-col>
-        <b-button variant="primary mb-3 px-3" :to="'/catalog/product/add?owner=BALIN'">Tambah Baru</b-button>
+        <b-button variant="primary mb-3 px-3" :to="'/catalog/product/add?owner=ninja@basil.id'">Tambah Baru</b-button>
       </b-col>
     </b-row>
 		
@@ -23,7 +23,7 @@
           ref="TableProduct" 
           :headers="['upc', 'thumbnail', 'nama']"
           :dataFilter="{
-            owner: 'BALIN'
+            owner: 'ninja@basil.id'
           }">
         </TableProduct>
       </div>
