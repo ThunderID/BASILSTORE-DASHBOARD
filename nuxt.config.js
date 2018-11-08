@@ -24,7 +24,7 @@ module.exports = {
     appName: 'BASILSTORE - Admin Dashboard - by Thunderlab',
     locale: 'id',
     api: {
-      url: 'http://localhost:9700/graphql'
+      url: 'http://128.199.145.173:8118'
     },
     lang: {
       id: {
@@ -70,8 +70,9 @@ module.exports = {
     {src: '~/plugins/client-side-plugins.js', ssr: false},
     // {src: '~/plugins/laravel-validation-trans.js', ssr: false}
     '~/plugins/vue-select.js',
-    '~/plugins/vue-js-toggle.js'
-    // '~/plugins/feather-icon.js'
+    '~/plugins/vue-js-toggle.js',
+    '~/plugins/vue-the-mask.js',
+    '~/plugins/vue-money.js'
   ],
   router: {
     // linkActiveClass: null
@@ -82,10 +83,10 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
-  loading: { color: '#f00' },
+  loading: { color: '#1bd2ac' },
   loadingIndicator: {
     name: 'pulse',
-    color: 'f00',
+    color: '1bd2ac',
     background: '000'
   },
   /*

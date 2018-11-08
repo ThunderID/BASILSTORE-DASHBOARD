@@ -99,8 +99,6 @@ export default {
           queryVar[key] = this.dataFilter[key]
         }
       }
-
-      console.log(queryVar)
       this.$apollo.query(
         {
           query: CatalogQuery,

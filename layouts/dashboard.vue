@@ -5,7 +5,7 @@
 
       <!-- BRAND -->
       <b-navbar-brand :to="'/dashboard'">
-        <img src="/l.png" height="40" class='pl-3'>
+        <b-img rounded="0" width="70" height="55" src="/logo.png" class="pl-3 pb-2"/>
       </b-navbar-brand>
 
       <b-navbar-toggle target="nav_collapse" class='border-0'></b-navbar-toggle>
