@@ -1,6 +1,15 @@
 <template>
   <div>
-    <h2>Example heading <b-badge>New</b-badge></h2>
+    <h3>Saat ini anda menggunakan plan <b-badge>New</b-badge></h3>
+    <br>
+    <b-row>
+      <b-col cols="12">
+        <b-button :to="'/my-account/plansaya/upgrade'" type="button" variant="primary" block :disabled="isLoading">
+          <span v-if="isLoading"><i class="fas fa-spinner fa-spin"></i> Upgrade Sekarang</span>
+          <span v-else>Upgrade Sekarang</span>
+        </b-button>
+      </b-col>
+    </b-row>
   </div>
 </template>
 <script>
@@ -57,6 +66,8 @@ export default {
         }
       })
     }
+  },
+  onUpgrade () {
   }
 }
 </script>

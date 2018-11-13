@@ -1,6 +1,6 @@
 mutation UACRegistering($input: IUser!) {
 	UACRegistering(input: $input) {
-		name,
-		username
+		id,
+		name
 	}
 }

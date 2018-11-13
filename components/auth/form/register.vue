@@ -48,7 +48,7 @@ export default {
           mutation: Register,
           variables: vm.transformedData
         }).then(function (res) {
-          if (res.data.register) {
+          if (res.data.UACRegistering) {
             vm.$emit('SUCCESS', res)
           } else {
             vm.$emit('FAIL', res)

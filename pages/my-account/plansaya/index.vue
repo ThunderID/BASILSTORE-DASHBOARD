@@ -2,6 +2,7 @@
   <div class="container-fluid">
     
     <b-card title="Plan Saya">
+      <hr>
       <div class='card-text pt-4'>
         <MyPlan>
         </MyPlan>
