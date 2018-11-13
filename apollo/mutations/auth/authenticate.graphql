@@ -1,6 +1,5 @@
-mutation authenticate($input: ILogin) {
-	authenticate(input: $input) {
-		user {name, username},
+mutation UACAuthenticating($input: ILogin) {
+	UACAuthenticating(input: $input) {
 		token
 	}
 }

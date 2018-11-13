@@ -21,7 +21,7 @@ export default {
   components: { LoginForm },
   methods: {
     onLoginSuccess (data) {
-      this.$store.dispatch('authentication/login', {user: data.user, token: data.token})
+      this.$store.dispatch('authentication/login', {user: ['ardian', '1234'], token: data.UACauthenticating})
       this.$nuxt.$router.replace('/dashboard')
     },
     onLoginFail (data) {

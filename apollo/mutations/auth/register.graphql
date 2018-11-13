@@ -1,5 +1,5 @@
-mutation register($input: IUser!) {
-	register(input: $input) {
+mutation UACRegistering($input: IUser!) {
+	UACRegistering(input: $input) {
 		name,
 		username
 	}

@@ -25,9 +25,9 @@
         <b-navbar-nav class='ml-auto px-3'>
           <b-nav-item><i class="material-icons">apps</i> </b-nav-item>
           <b-nav-item-dropdown right :text=nama>
-            <b-dropdown-item :to="'dashboard/my-account/update-profile'">Update Profile</b-dropdown-item>
-            <b-dropdown-item :to="'dashboard/my-account/update-password'">Update Password</b-dropdown-item>
-            <b-dropdown-item :to="'/'">Logout</b-dropdown-item>
+            <b-dropdown-item :to="'/my-account'">Profile</b-dropdown-item>
+            <b-dropdown-item :to="'/dashboard/my-account/update-password'">Update Password</b-dropdown-item>
+            <b-dropdown-item @click="onLogOut">Logout</b-dropdown-item>
           </b-nav-item-dropdown>  
         </b-navbar-nav>
       </b-collapse>
@@ -49,6 +49,12 @@ export default {
   data () {
     return {
       nama: this.$store.state.authentication.me.name
+    }
+  },
+  methods: {
+    onLogOut () {
+      this.$store.dispatch('authentication/logout')
+      this.$nuxt.$router.replace('/')
     }
   }
 }

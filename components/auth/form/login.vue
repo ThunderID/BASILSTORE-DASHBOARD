@@ -43,8 +43,8 @@ export default {
           mutation: Authenticate,
           variables: vm.transformedData
         }).then(function (res) {
-          if (res.data.authenticate) {
-            vm.$emit('SUCCESS', res.data.authenticate)
+          if (res.data.UACAuthenticating) {
+            vm.$emit('SUCCESS', res.data.UACAuthenticating)
           } else {
             vm.$emit('FAIL', res)
           }

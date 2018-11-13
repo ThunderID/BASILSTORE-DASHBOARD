@@ -1,0 +1,27 @@
+query Plan{
+  UACSubscription{
+    nomor
+    plan{
+      kode
+      nama
+      harga{
+        nominal
+        currency
+      }
+      penetapan_harga{
+        satuan
+        bundle
+      }
+      perpanjangan
+      kuota_total{
+        user
+        toko
+      }
+      kuota_terpakai{
+        user
+        toko
+      }
+      
+    }
+  }
+}
