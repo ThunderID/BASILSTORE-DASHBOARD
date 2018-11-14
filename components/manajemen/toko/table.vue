@@ -1,24 +1,51 @@
 <template>
   <div>
-    <h3>Saat ini anda menggunakan plan <b-badge>{{data.plan}}</b-badge></h3>
-    <br>
-    <h4>Nomor Subscription : {{data.nomor}}</h4>
-    <br>
-    <b-row v-if="data.kode == 'FREETRIAL'">
-      <b-col cols="12">
-        <b-button :to="'/my-account/plansaya/upgrade'" type="button" variant="primary" block :disabled="isLoading">
-          <span v-if="isLoading"><i class="fas fa-spinner fa-spin"></i> Upgrade Sekarang</span>
-          <span v-else>Upgrade Sekarang</span>
-        </b-button>
-      </b-col>
-    </b-row>
+    <b-table hover 
+      :fields="computedHeaders"
+      :items="dataTable"
+      @row-clicked="rowClicked"
+      empty-text="Tidak ada data">
+    </b-table>
   </div>
 </template>
 <script>
 
-import MyplanQuery from '~/apollo/queries/query_myplan'
+import TokoQuery from '~/apollo/queries/query_toko'
 
 export default {
+  props: {
+    headers: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    },
+    defaultData: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    }
+  },
+  computed: {
+    computedHeaders: function () {
+      let temp = this
+      let tmp = []
+      temp.headers.forEach(function (item) {
+        for (let i = 0; i < temp.table.availableHeaders.length; i++) {
+          if (temp.table.availableHeaders[i].key === item) {
+            tmp.push(temp.table.availableHeaders[i])
+          }
+        }
+      })
+
+      return tmp
+    },
+    dataTable: function () {
+      let data = this.table.data
+      return data
+    }
+  },
   apollo: {
     // -----------------------------------------------------------------------------------------------------------------------
     // TO MODIFY
@@ -30,10 +57,13 @@ export default {
   },
   data () {
     return {
-      data: {
-        plan: '',
-        nomor: '',
-        kode: ''
+      table: {
+        data: [],
+        availableHeaders: [
+          { key: 'nama', label: 'Nama', sortable: true },
+          { key: 'jenis', label: 'Jenis', sortable: true },
+          { key: 'industri', label: 'Industri', sortable: false }
+        ]
       }
     }
   },
@@ -43,18 +73,15 @@ export default {
   methods: {
     fetch () {
       let vm = this
-      let queryVar = {}
+      vm.table.data = []
 
       this.$apollo.query(
         {
-          query: MyplanQuery,
-          variables: queryVar,
+          query: TokoQuery,
           fetchPolicy: 'no-cache'
         }
       ).then(function (result) {
-        vm.data.nomor = result.data.UACSubscription[0].nomor
-        vm.data.plan = result.data.UACSubscription[0].plan.nama
-        vm.data.kode = result.data.UACSubscription[0].plan.kode
+        vm.table.data = result.data.MANListToko
       }).catch(e => {
         console.log('gagal')
         if (e.graphQLErrors && Array.isArray(e.graphQLErrors) && e.graphQLErrors.length) {
@@ -73,9 +100,12 @@ export default {
           vm.$emit('SUBMIT_ERROR', 'Fail to connect to server')
         }
       })
+    },
+    rowClicked (record, index) {
+      let vm = this
+      // console.log(vm.dataFilter)
+      vm.$nuxt.$router.replace({path: '/catalog/product/' + record.upc, query: vm.dataFilter})
     }
-  },
-  onUpgrade () {
   }
 }
 </script>

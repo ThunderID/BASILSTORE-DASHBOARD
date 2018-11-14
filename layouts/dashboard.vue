@@ -23,6 +23,9 @@
 
         <!-- Right -->
         <b-navbar-nav class='ml-auto px-3'>
+          <b-nav-item>
+            <b-badge :to="'/my-account/plansaya'">Free Trial</b-badge>
+          </b-nav-item>
           <b-nav-item><i class="material-icons">apps</i> </b-nav-item>
           <b-nav-item-dropdown right :text=nama>
             <b-dropdown-item :to="'/my-account'">Profile</b-dropdown-item>

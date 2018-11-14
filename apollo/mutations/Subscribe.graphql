@@ -1,10 +1,9 @@
-query subscribe {
-  UACSubscription(skip:0, take:1){
-    nomor
+mutation subscribing{
+  UACSubscribing(input:{plan:{kode:"FREETRIAL"}},
+  tambahToko:{nama:"TOKOSAYA", jenis:"TOKO", industri:"KETJAP"}){
     plan {
       kode
       nama
-      perpanjangan
       kuota_total {
         user
         toko

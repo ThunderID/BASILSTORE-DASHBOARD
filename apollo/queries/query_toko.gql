@@ -1,0 +1,7 @@
+query MANListToko {
+  MANListToko{
+    nama
+    jenis
+    industri
+  }
+}
