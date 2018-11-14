@@ -1,9 +1,9 @@
 export const state = () => ({
-  me: null,
-  token: null,
-  org: null,
-  last_active: null,
-  authorizations: null
+  me: '',
+  token: '',
+  org: '',
+  last_active: '',
+  authorizations: ''
 })
 
 export const mutations = {
@@ -22,6 +22,7 @@ export const mutations = {
   },
 
   SET_ACCESS_TOKEN (state, token) {
+    console.log(token)
     state.token = token
   },
 
