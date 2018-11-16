@@ -1,17 +1,12 @@
-mutation subscribing{
-  UACSubscribing(input:{plan:{kode:"FREETRIAL"}},
-  tambahToko:{nama:"TOKOSAYA", jenis:"TOKO", industri:"KETJAP"}){
-    plan {
+mutation subscribe(
+  $kode: String!, 
+  $upgradePlan: ISubPlan, 
+  ){
+  UACSubscribing(kode:$kode, upgradePlan:$upgradePlan){
+    nomor
+    plan{
       kode
       nama
-      kuota_total {
-        user
-        toko
-      }
-      kuota_terpakai {
-        user
-        toko
-      }
     }
   }
 }

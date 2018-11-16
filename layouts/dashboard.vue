@@ -23,8 +23,11 @@
 
         <!-- Right -->
         <b-navbar-nav class='ml-auto px-3'>
-          <b-nav-item>
-            <b-badge :to="'/my-account/plansaya'">Free Trial</b-badge>
+          <b-nav-item v-if="data.plan === ''">
+            <b-badge :to="'/subscribe'">Subscribe</b-badge>
+          </b-nav-item>
+          <b-nav-item v-else>
+            <b-badge :to="'/my-account/plansaya'">{{data.plan}}</b-badge>
           </b-nav-item>
           <b-nav-item><i class="material-icons">apps</i> </b-nav-item>
           <b-nav-item-dropdown right :text=nama>
@@ -48,17 +51,55 @@ body {
 </style>
 
 <script>
+import MyplanQuery from '~/apollo/queries/query_myplan'
 export default {
   data () {
     return {
-      nama: this.$store.state.authentication.me.name
+      nama: this.$store.state.authentication.me.name,
+      data: {
+        plan: ''
+      }
     }
   },
   methods: {
     onLogOut () {
       this.$store.dispatch('authentication/logout')
       this.$nuxt.$router.replace('/')
+    },
+    fetch () {
+      let vm = this
+      let queryVar = {}
+
+      this.$apollo.query(
+        {
+          query: MyplanQuery,
+          variables: queryVar,
+          fetchPolicy: 'no-cache'
+        }
+      ).then(function (result) {
+        vm.data.plan = result.data.UACSubscription[0].plan.nama
+      }).catch(e => {
+        console.log('gagal')
+        if (e.graphQLErrors && Array.isArray(e.graphQLErrors) && e.graphQLErrors.length) {
+          e.graphQLErrors.forEach(function (error) {
+            switch (error.code) {
+              case 401:
+                vm.$nuxt.$router.replace({ path: '/' })
+                break
+
+              default:
+                vm.$emit('SUBMIT_FAIL', error.code)
+                break
+            }
+          })
+        } else if (e.networkError.message) {
+          vm.$emit('SUBMIT_ERROR', 'Fail to connect to server')
+        }
+      })
     }
+  },
+  mounted () {
+    this.fetch()
   }
 }
 </script>

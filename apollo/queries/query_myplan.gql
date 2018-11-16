@@ -1,17 +1,25 @@
-query subscribe {
-  UACSubscription(skip:0, take:1){
+query plan{
+  UACSubscription{
     nomor
-    plan {
+    plan{
       kode
       nama
-      perpanjangan
-      kuota_total {
-        user
-        toko
+      harga{
+        nominal
+        currency
       }
-      kuota_terpakai {
+      penetapan_harga{
+        satuan
+        bundle
+      }
+      perpanjangan
+      kuota_total{
         user
-        toko
+        tenant
+      }
+      kuota_terpakai{
+        user
+        tenant
       }
     }
   }

@@ -1,5 +1,6 @@
-query MANListToko {
-  MANListToko{
+query tenant{
+  MANListTenant{
+    id
     nama
     jenis
     industri

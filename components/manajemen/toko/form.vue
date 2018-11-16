@@ -56,43 +56,9 @@
 
 <script>
 // apollo
-import GrupQuery from '~/apollo/queries/query_group'
-import Subscribe from '~/apollo/mutations/Subscribe'
-
-// component
-import FormVarian from '~/components/catalog/product/form/opsi'
-import ModalHarga from '~/components/catalog/product/form/harga'
+import AddTenant from '~/apollo/mutations/UpdateTenant'
 
 export default {
-  props: {
-    defaultData: {
-      type: Array,
-      default: function () {
-        return []
-      }
-    },
-    ownerID: {
-      type: String,
-      required: true
-    },
-    productUPC: {
-      type: String,
-      default: null
-    },
-    defaultOpsi: {
-      type: Array,
-      default: function () {
-        return []
-      }
-    },
-    defaultVarian: {
-      type: Array,
-      default: function () {
-        return []
-      }
-    }
-  },
-  components: { FormVarian, ModalHarga },
   apollo: {
     // -----------------------------------------------------------------------------------------------------------------------
     // TO MODIFY
@@ -105,114 +71,14 @@ export default {
   data () {
     return {
       form: {
-        upc: '',
-        thumbnail: '',
         nama: '',
-        kode_owner: ''
+        jenis: '',
+        industri: ''
       },
-      category: [],
-      listCategory: [],
-      options: [],
-      optionsTemp: [],
-      prices: [],
-      varians: [],
-      variansTemp: [],
-      isLoading: false,
-      isCounter: 0,
-      showModal: false
-    }
-  },
-  mounted () {
-    this.loadCategory()
-  },
-  computed: {
-    transformInput: function () {
-      return {
-        input: {
-          upc: this.formData.upc
-        }
-      }
-    },
-    listOptions: function () {
-      return this.options
-    },
-    listPrices: function () {
-      return this.prices
+      isLoading: false
     }
   },
   methods: {
-    hideModalHarga () {
-      this.$refs.modalHarga.hide()
-      this.showModal = false
-    },
-    showModalHarga () {
-      this.showModal = true
-    },
-    addVarian () {
-      this.variansTemp.push({
-        sku: '',
-        parameter: '',
-        value: '',
-        bundle: ''
-      })
-    },
-    removeVarian (idx) {
-      this.variansTemp.splice((idx - 1), 1)
-    },
-    addOpsi () {
-      this.optionsTemp.push({
-        judul: '',
-        bundle: '',
-        varian: []
-      })
-    },
-    editOpsi (idx) {
-    },
-    updateOpsi (evt) {
-      let vm = this
-      // evt.preventDefault()
-      if (vm.optionsTemp.judul !== '') {
-        this.options.push({
-          judul: this.optionsTemp.judul,
-          bundle: this.optionsTemp.bundle,
-          varian: this.variansTemp
-        })
-        this.optionsTemp = []
-        this.variansTemp = []
-      }
-    },
-    removeOpsi (idx) {
-      this.options.splice((idx - 1), 1)
-    },
-    getHarga (data) {
-      if (data && data.length !== 0) {
-        this.prices.push(data)
-        this.$refs.modalHarga.hide()
-        // console.log({1: data, 2: this.prices})
-      }
-    },
-    removePrice (index) {
-      this.prices.splice((index - 1), 1)
-    },
-    loadCategory () {
-      let vm = this
-      vm.listCategory = []
-      this.$apollo.query(
-        {
-          query: GrupQuery,
-          variables: {
-            owner: vm.ownerID
-          },
-          fetchPolicy: 'no-cache'
-        }
-      ).then(function (result) {
-        var newListCategory = []
-        result.data.pengaturanGrup.forEach(function (i, k) {
-          newListCategory[k] = {slug: i.slug, berlaku: ['BALINDINOYO']}
-        })
-        vm.listCategory = newListCategory
-      })
-    },
     onSubmit (e) {
       let vm = this
 
@@ -220,20 +86,17 @@ export default {
       vm.isLoading = true
       vm.$validator.validateAll()
       if (vm.errors.count() === 0) {
+        vm.transformedData = {
+          input: {nama: vm.form.nama, jenis: vm.form.jenis, industri: vm.form.industri}
+        }
         console.log('yes submit')
-        vm.form.kode_owner = 'ninja@basil.id'
         vm.$apollo.mutate({
-          mutation: Subscribe,
-          variables: {
-          }
+          mutation: AddTenant,
+          variables: vm.transformedData
         }).then(function (res) {
           console.log(res)
-          if (res.data.UACSubscribing) {
-            vm.$emit('SUCCESS', res)
-          } else {
-            vm.$emit('FAIL', res)
-          }
           vm.isLoading = false
+          vm.$nuxt.$router.replace({ path: '/manajemen/toko' })
         }).catch(function (e) {
           console.log(e)
           vm.$emit('FAIL', e)

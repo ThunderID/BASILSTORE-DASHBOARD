@@ -1,5 +1,9 @@
 mutation UACAuthenticating($input: ILogin) {
 	UACAuthenticating(input: $input) {
 		token
+		user{
+		id
+		name
+		}
 	}
 }

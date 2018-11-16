@@ -81,7 +81,7 @@ export default {
           fetchPolicy: 'no-cache'
         }
       ).then(function (result) {
-        vm.table.data = result.data.MANListToko
+        vm.table.data = result.data.MANListTenant
       }).catch(e => {
         console.log('gagal')
         if (e.graphQLErrors && Array.isArray(e.graphQLErrors) && e.graphQLErrors.length) {
