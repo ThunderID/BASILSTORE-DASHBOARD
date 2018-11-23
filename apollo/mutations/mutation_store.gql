@@ -1,0 +1,16 @@
+mutation MANUpdateTenant(
+		$id: String,
+		$input: ITenant
+	) {
+		MANUpdateTenant(
+			id: $id,
+			input: $input
+		) {
+			Tenant {
+				id
+				nama
+				jenis
+				industri
+			}
+		}
+	}

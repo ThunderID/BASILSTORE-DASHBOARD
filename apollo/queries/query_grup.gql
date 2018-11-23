@@ -1,0 +1,20 @@
+query KATGrup(
+		$skip: Int,
+		$take: Int,
+		$tenant_id: String!,
+		$search: String
+	) {
+		KATGrup(
+			skip: $skip,
+			take: $take,
+			tenant_id: $tenant_id,
+			search: $search
+		) {
+			id,
+			nama,
+			jalur,
+			slug,
+			tipe,
+			parent_id
+		}
+}

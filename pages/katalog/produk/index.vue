@@ -3,12 +3,7 @@
      <b-row align-h="end">
       <b-col cols="12" md="1"><h4 class="text-right"><i class="material-icons md-36">store</i></h4></b-col>
       <b-col cols="12" md="4">
-        <v-select
-          v-model="selectedStore"
-          :options="options"
-          class="bg-white ml-auto"
-          @input="check">
-        </v-select>
+       <SelectToko></SelectToko>
       </b-col>
     </b-row>
     <b-row align-h="between">
@@ -19,23 +14,15 @@
 		
     <b-card title="Produk">
       <div class='card-text pt-4'>
-        <TableProduct 
-          ref="TableProduct" 
-          :headers="['upc', 'thumbnail', 'nama']"
-          :dataFilter="{
-            owner: 'ninja@basil.id'
-          }">
-        </TableProduct>
       </div>
     </b-card>
   </div>
 </template>
 
 <script>
-import TableProduct from '~/components/catalog/product/table'
-
+import SelectToko from '~/components/manajemen/toko/select_dropdown'
 export default {
-  components: { TableProduct },
+  components: { TableProduct, SelectToko },
   data () {
     return {
       selectedStore: {label: 'BALIN DINOYO', value: 'BALINDINOYO'},

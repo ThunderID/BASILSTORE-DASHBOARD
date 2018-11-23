@@ -215,7 +215,7 @@
 
 <script>
 // apollo
-import GrupQuery from '~/apollo/queries/query_group'
+import GrupQuery from '~/apollo/queries/query_grup'
 import AddCatalog from '~/apollo/mutations/AddCatalog'
 
 // component
