@@ -1,0 +1,18 @@
+#import "./../fragment/produk.gql"
+
+query KATListProduk (
+	$skip: Int,
+	$take: Int,
+	$tenant_id: String!,
+	$upc: String
+) {
+	KATListProduk
+	(
+		skip: $skip,
+		take: $take,
+		tenant_id: $tenant_id,
+		upc: $upc
+	) {
+		...produk
+	}
+}

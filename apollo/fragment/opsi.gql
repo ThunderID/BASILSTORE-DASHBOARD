@@ -1,0 +1,8 @@
+#import "./../fragment/varian.gql"
+
+fragment opsi on ProdukOpsi {
+	id,
+	judul,
+	varian {...varian},
+	bundle
+}

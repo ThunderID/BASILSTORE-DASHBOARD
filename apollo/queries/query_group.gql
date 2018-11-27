@@ -1,19 +1,20 @@
-query pengaturanGrup(
+query KATGrup(
 		$skip: Int,
 		$take: Int,
-		$owner: String,
-		$tipe: String
+		$tenant_id: String!,
+		$search: String
 	) {
-		pengaturanGrup(
+		KATGrup(
 			skip: $skip,
 			take: $take,
-			owner: $owner,
-			tipe: $tipe
+			tenant_id: $tenant_id,
+			search: $search
 		) {
-			kode_owner,
-			grup_id,
-			tipe,
+			id,
 			nama,
-			slug
+			jalur,
+			slug,
+			tipe,
+			parent_id
 		}
 }

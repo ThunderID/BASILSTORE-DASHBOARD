@@ -1,0 +1,4 @@
+fragment keyword on BProdukKeyword {
+	word,
+	tag
+}

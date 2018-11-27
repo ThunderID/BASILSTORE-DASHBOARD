@@ -1,0 +1,5 @@
+fragment timezone on TZone {
+	date,
+	timezone_type,
+	timezone
+}

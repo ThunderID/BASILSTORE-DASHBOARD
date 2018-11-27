@@ -1,0 +1,11 @@
+#import "./../fragment/timezone.gql"
+#import "./../fragment/money.gql"
+#import "./../fragment/produkPengaturanHarga.gql"
+
+fragment subHarga on ProdukHarga {
+  id,
+  harga{...money},
+  mulai{...timezone},
+  hingga{...timezone},
+  pengaturan {...subPengaturanHarga}
+}

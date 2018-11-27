@@ -1,0 +1,6 @@
+fragment varian on BarangVarian {
+	sku,
+	parameter,
+	value,
+	bundle
+}

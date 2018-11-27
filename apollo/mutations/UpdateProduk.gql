@@ -1,0 +1,27 @@
+#import "./../fragment/produk.gql"
+
+mutation KATUpdatingProduk(
+	$tenant_id: String!,
+	$upc: String,
+	$updateBarang: IBarang,
+	$tambahOpsi: [IProdukOpsi],
+	$hapusOpsi: [String],
+	$tambahHarga: [IProdukHarga],
+	$hapusHarga: [String],
+	$tambahKeyword: [IProdukKeyword],
+	$hapusKeyword: [String]
+) {
+	KATUpdatingProduk (
+		tenant_id: $tenant_id,
+		upc: $upc,
+		updateBarang: $updateBarang,
+		tambahOpsi: $tambahOpsi,
+		hapusOpsi: $hapusOpsi,
+		tambahHarga: $tambahHarga,
+		hapusHarga: $hapusHarga,
+		tambahKeyword: $tambahKeyword,
+		hapusKeyword: $hapusKeyword
+	) {
+		...produk
+	}
+}

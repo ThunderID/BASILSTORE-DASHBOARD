@@ -1,0 +1,8 @@
+fragment grup on Grup {
+	id,
+	nama,
+	jalur,
+	slug,
+	tipe,
+	parent_id
+}

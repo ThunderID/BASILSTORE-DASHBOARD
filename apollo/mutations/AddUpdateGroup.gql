@@ -1,0 +1,7 @@
+#import "./../fragment/grup.gql"
+
+mutation KATUpdatingGrup($tenant_id: String!, $updateGrup: IGrup) {
+	KATUpdatingGrup (tenant_id: $tenant_id, updateGrup: $updateGrup) {
+		...grup
+	}
+}

@@ -14,7 +14,7 @@
         <!-- Left -->
         <b-navbar-nav class='px-3 mt-3 mt-md-0'>
           <b-nav-item :to="'/dashboard'">Dashboard</b-nav-item>
-          <b-nav-item :to="'/catalog'">Sales Katalog</b-nav-item>
+          <b-nav-item :to="'/katalog'">Sales Katalog</b-nav-item>
           <b-nav-item :to="'/transaction'">Sales Transaksi</b-nav-item>
           <b-nav-item :to="'/inventory'">Inventory</b-nav-item>  
           <b-nav-item :to="'/manajemen'">Manajemen</b-nav-item>  

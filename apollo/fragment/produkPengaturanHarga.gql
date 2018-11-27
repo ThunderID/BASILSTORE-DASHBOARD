@@ -1,0 +1,6 @@
+fragment subPengaturanHarga on ProdukPengaturanHarga {
+  penetapan {
+    satuan,
+    bundle
+  }
+}

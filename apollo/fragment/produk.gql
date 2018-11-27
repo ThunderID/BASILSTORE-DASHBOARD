@@ -1,0 +1,13 @@
+#import "./../fragment/opsi.gql"
+#import "./../fragment/harga.gql"
+#import "./../fragment/keyword.gql"
+
+fragment produk on PBarang {
+	upc,
+	nama,
+	galeri {thumbnail},
+	pengaturan {is_stok},
+	opsi {...opsi},
+	list_harga {...subHarga},
+	list_keyword {...keyword}
+}
