@@ -27,7 +27,7 @@
             <b-badge :to="'/subscribe'">Subscribe</b-badge>
           </b-nav-item>
           <b-nav-item v-else>
-            <b-badge :to="'/my-account/plansaya'">{{data.plan}}</b-badge>
+            <b-badge :to="'/my-account/plansaya'">{{data}}</b-badge>
           </b-nav-item>
           <b-nav-item><i class="material-icons">apps</i> </b-nav-item>
           <b-nav-item-dropdown right :text=nama>
@@ -77,7 +77,7 @@ export default {
           fetchPolicy: 'no-cache'
         }
       ).then(function (result) {
-        vm.data.plan = result.data.UACSubscription[0].plan.nama
+        vm.data.plan = result.data.UACSubscription[0].plan
       }).catch(e => {
         console.log('gagal')
         if (e.graphQLErrors && Array.isArray(e.graphQLErrors) && e.graphQLErrors.length) {

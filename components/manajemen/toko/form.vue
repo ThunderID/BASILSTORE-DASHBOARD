@@ -6,13 +6,13 @@
         <div class="row">
           <div class="col-12 col-md-5">
             <b-form-group label="Nama Toko">
-              <b-form-input data-vv-name="nama" v-validate="'required|min:3'" v-model="form.nama" :state="errors.has('nama')" placeholder="Nama toko"></b-form-input>
+              <b-form-input data-vv-name="nama" v-validate="'required|min:2'" v-model="form.nama" :state="errors.has('nama')" placeholder="Nama toko"></b-form-input>
               <b-form-invalid-feedback :force-show="errors.has('nama')">{{ errors.first('nama') }}</b-form-invalid-feedback>
             </b-form-group>
           </div>
           <div class="col-12 col-md-7">
             <b-form-group label="Jenis">
-              <b-form-input data-vv-name="jenis" v-validate="'required|min:3'" v-model="form.jenis" :state="errors.has('jenis')" placeholder="Jenis"></b-form-input>
+              <b-form-input data-vv-name="jenis" v-validate="'required|min:2'" v-model="form.jenis" :state="errors.has('jenis')" placeholder="Jenis"></b-form-input>
               <b-form-invalid-feedback :force-show="errors.has('jenis')">{{ errors.first('jenis') }}</b-form-invalid-feedback>
             </b-form-group>
           </div>

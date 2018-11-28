@@ -1,0 +1,14 @@
+query MANListTenant(
+	$skip: Int,
+	$take: Int,
+) {
+	MANListTenant(
+		skip: $skip,
+		take: $take
+	) {
+		id,
+		nama,
+		jenis,
+		industri
+	}
+}
