@@ -1,5 +1,5 @@
 mutation UpdateTenant(
-	$id: Int,
+	$id: String,
 	$input: ITenant
 ){
   MANUpdateTenant(id:$id,input:$input){

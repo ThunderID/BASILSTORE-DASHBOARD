@@ -5,7 +5,7 @@
 
       <b-row align-h="center">
         <b-col cols="12" class='text-center mb-4'>
-          <nuxt-link to="/">
+          <nuxt-link to="#">
             <img src="~/static/l.png">
           </nuxt-link>
         </b-col>

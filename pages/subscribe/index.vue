@@ -63,7 +63,7 @@ export default {
           mutation: Subscribe,
           variables: vm.transformedData
         }).then(function (res) {
-          vm.$nuxt.$router.replace({ path: '/dashboard' })
+          vm.$nuxt.$router.replace({ path: '/manajemen/toko' })
           vm.isLoading = false
         }).catch(function (e) {
           console.log('fail')

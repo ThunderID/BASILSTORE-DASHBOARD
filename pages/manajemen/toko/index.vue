@@ -35,7 +35,7 @@ export default {
       }, 10)
     // },
     // catalogClicked (catalogUPC) {
-    //   this.$nuxt.$router.replace({path: '/catalog/product/' + catalogUPC, query: this.dataFilter})
+    //   this.$nuxt.$router.replace({path: '/manajemen/toko/' + catalogUPC, query: this.dataFilter})
     }
   }
 }
