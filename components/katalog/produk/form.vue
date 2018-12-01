@@ -40,22 +40,75 @@
               v-model="isStok"
               value="true"
               unchecked-value="false">
-              Stok ada
+              Produk memiliki stok
             </b-form-checkbox>
           </b-col>
         </b-row>
+
         <div class="clearfix">&nbsp;</div>
-        <hr/>
         <div class="clearfix">&nbsp;</div>
 
+        <b-row>
+          <b-col cols="12">
+            <b-tabs no-fade>
+              <b-tab title="Opsi" active>
+                <TableOpsi class="mt-3"></TableOpsi>
+              </b-tab>
+              <b-tab title="Harga">
+                <TableHarga class="mt-3"></TableHarga>
+              </b-tab>
+              <b-tab title="Keyword">
+                <TableOpsi class="mt-3"></TableOpsi>
+              </b-tab>
+            </b-tabs>
+          </b-col>
+        </b-row>
+
         <!-- OPSI -->
-        <b-card sub-title="Opsi Produk" class="border-0" no-body="true">
+        <!-- <b-card class="border-0" no-body="true">
           <div class='card-text p-0'>
-            <h5>Opsi</h5>
-            <TableOpsi></TableOpsi>
+            <b-form-checkbox id="checkboxOpsi"
+              v-model="showOpsi"
+              value="true"
+              unchecked-value="false">
+              <h5>Opsi</h5>
+            </b-form-checkbox>
+            <TableOpsi v-if="showOpsi === 'true'"></TableOpsi>
           </div>
-        </b-card>
+        </b-card> -->
         <!-- END OPSI -->
+
+        <!-- HARGA -->
+        <!-- <b-card class="border-0" no-body="true">
+          <div class='card-text p-0'>
+            <b-form-checkbox id="checkboxHarga"
+              v-model="showHarga"
+              value="true"
+              unchecked-value="false">
+              <h5>Harga</h5>
+            </b-form-checkbox>
+            <TableOpsi v-if="showHarga === 'true'"></TableOpsi>
+          </div>
+        </b-card> -->
+        <!-- END HARGA -->
+
+        <!-- <div class="clearfix">&nbsp;</div>
+        <hr/>
+        <div class="clearfix">&nbsp;</div> -->
+
+        <!-- KEYWORD -->
+        <!-- <b-card class="border-0" no-body="true">
+          <div class='card-text p-0'>
+            <b-form-checkbox id="checkboxKeyword"
+              v-model="showKeyword"
+              value="true"
+              unchecked-value="false">
+              <h5>Keyword</h5>
+            </b-form-checkbox>
+            <TableOpsi v-if="showKeyword === 'true'"></TableOpsi>
+          </div>
+        </b-card> -->
+        <!-- END KEYWORD -->
 
         <div class="clearfix">&nbsp;</div>
         <div class="clearfix">&nbsp;</div>
@@ -73,8 +126,9 @@
 
 <script>
 import TableOpsi from '~/components/katalog/produk/varian/table'
+import TableHarga from '~/components/katalog/produk/harga/table'
 export default {
-  components: { TableOpsi },
+  components: { TableOpsi, TableHarga },
   props: {
     tenantID: {
       type: String
@@ -83,6 +137,9 @@ export default {
   data () {
     return {
       showUpdate: false,
+      showOpsi: false,
+      showHarga: false,
+      showKeyword: false,
       tenant_id: this.tenantID ? this.tenantID : null,
       upc: '',
       nama: '',

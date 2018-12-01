@@ -5,7 +5,7 @@ Vue.use(VueMoney,
   {
     decimal: ',',
     thousands: '.',
-    prefix: 'Rp ',
+    prefix: '',
     suffix: '',
     precision: 0,
     masked: false
