@@ -8,9 +8,9 @@
 				<select name="" id="" class="form-control">
 					<option value="">test</option>
 				</select>
-				<b-form-select v-else-if="data">
+				<!-- <b-form-select v-else-if="data">
 					<option v-for="item in data.MANListTenant" :value-field="item.nama">{{ item.nama }}</option>
-				</b-form-select>
+				</b-form-select> -->
       </template>
 		</ApolloQuery>
 	</div>

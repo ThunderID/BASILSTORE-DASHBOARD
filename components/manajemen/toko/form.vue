@@ -42,7 +42,7 @@
           <span v-if="isLoading"><i class="fas fa-spinner fa-spin"></i> Simpan</span>
           <span v-else>Simpan</span>
         </b-button>
-        <b-button  block to="/catalog/product/">
+        <b-button  block to="/manajemen/toko/">
           <span v-if="isLoading"><i class="fas fa-spinner fa-spin"></i> Batal</span>
           <span v-else>Batal</span>
         </b-button>
