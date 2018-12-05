@@ -4,5 +4,5 @@ fragment opsi on ProdukOpsi {
 	id,
 	judul,
 	varian {...varian},
-	bundle
+	bundle {kuantitas,satuan}
 }

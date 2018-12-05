@@ -99,7 +99,7 @@ export default {
     },
     rowClicked (record, index) {
       let vm = this
-      // console.log(vm.dataFilter)
+      console.log(vm.dataFilter)
       vm.$nuxt.$router.replace({path: '/manajemen/toko/' + record.upc, query: vm.dataFilter})
     }
   }

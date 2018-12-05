@@ -31,11 +31,8 @@
           </b-col>
         </b-row>
       </div>
-    </b-card>
-
-    <div class="clearfix">&nbsp;</div>
-    
-    <b-row>
+      <div class="clearfix">&nbsp;</div>
+      <b-row>
       <b-col cols="12">
         <slot name='action'></slot>
         <b-button type="submit" variant="primary" block :disabled="isLoading">
@@ -48,7 +45,7 @@
         </b-button>
       </b-col>
     </b-row>
-
+    </b-card>
     <div class="clearfix">&nbsp;</div>
     <div class="clearfix">&nbsp;</div>
   </b-form>

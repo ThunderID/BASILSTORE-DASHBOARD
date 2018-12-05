@@ -2,5 +2,5 @@ fragment varian on BarangVarian {
 	sku,
 	parameter,
 	value,
-	bundle
+	bundle{kuantitas,satuan}
 }

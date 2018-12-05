@@ -1,4 +1,5 @@
 <template>
+  <div v-if="tenantID !== null">
   <ApolloMutation :mutation="require('@/apollo/mutations/updateProduk.gql')"
     :variables="{
       tenant_id: (tenantID) ? tenantID : null,
@@ -11,7 +12,10 @@
         pengaturan: {
           is_stok: isStok
         }
-      }
+      },
+      tambahOpsi: showOpsi,
+      tambahHarga: showHarga,
+      tambahKeyword: showKeyword
     }"
     @done="onDone">
      <template slot-scope="{mutate, loading, gqlError: error }"> 
@@ -44,7 +48,9 @@
             </b-form-checkbox>
           </b-col>
         </b-row>
-
+        <!-- <div>
+          <p>{{showKeyword}}</p>
+        </div> -->
         <div class="clearfix">&nbsp;</div>
         <div class="clearfix">&nbsp;</div>
 
@@ -52,13 +58,13 @@
           <b-col cols="12">
             <b-tabs no-fade>
               <b-tab title="Opsi" active>
-                <TableOpsi class="mt-3"></TableOpsi>
+                <TableOpsi v-on:SUCCESS="onFetchOpsi" class="mt-3"></TableOpsi>
               </b-tab>
               <b-tab title="Harga">
-                <TableHarga class="mt-3"></TableHarga>
+                <TableHarga v-on:SUCCESS="onFetchHarga" class="mt-3"></TableHarga>
               </b-tab>
               <b-tab title="Keyword">
-                <TableOpsi class="mt-3"></TableOpsi>
+                <TableKeyword v-on:SUCCESS="onFetchKeyword" class="mt-3"></TableKeyword>
               </b-tab>
             </b-tabs>
           </b-col>
@@ -122,13 +128,22 @@
         </template>
       </template>
   </ApolloMutation>
+  </div>
+  <div v-else>
+    <b-row>
+      <b-col cols="12">
+        <div class="alert alert-info">Silahkan pilih toko terlebih dahulu</div>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
 import TableOpsi from '~/components/katalog/produk/varian/table'
 import TableHarga from '~/components/katalog/produk/harga/table'
+import TableKeyword from '~/components/katalog/produk/keyword/table'
 export default {
-  components: { TableOpsi, TableHarga },
+  components: { TableOpsi, TableHarga, TableKeyword },
   props: {
     tenantID: {
       type: String
@@ -137,9 +152,9 @@ export default {
   data () {
     return {
       showUpdate: false,
-      showOpsi: false,
-      showHarga: false,
-      showKeyword: false,
+      showOpsi: [],
+      showHarga: [],
+      showKeyword: [],
       tenant_id: this.tenantID ? this.tenantID : null,
       upc: '',
       nama: '',
@@ -153,6 +168,15 @@ export default {
       this.nama = ''
       this.thumbnail = ''
       this.isStok = false
+    },
+    onFetchOpsi (value) {
+      this.showOpsi = value
+    },
+    onFetchHarga (value) {
+      this.showHarga = value
+    },
+    onFetchKeyword (value) {
+      this.showKeyword = value
     }
   }
 }

@@ -2,22 +2,38 @@
   <div class="container-fluid">
     <b-row align-h="between">
       <b-col cols="12" md="6">
-        <b-button variant="primary mb-3 px-3" :to="'/catalog/product'">Kembali</b-button>
-      </b-col>
-      <b-col cols="12" md="6" class="text-right">
-        <b-button variant="primary mb-3 px-3" :to="{path: '/catalog/product/add/', query: $route.query}">Ubah</b-button>
+        <b-button variant="primary mb-3 px-3" :to="'/katalog/produk'">Kembali</b-button>
       </b-col>
     </b-row>
     <b-card>
       <b-media>
-        <b-img-lazy v-if="table.data.thumbnail"  slot="aside" :src="`${table.data.thumbnail}`" :alt="table.data.nama" thumbnail fluid  blank-color="#bbb"/>
+        <b-img-lazy v-if="this.gambar"  slot="aside" :src="`${this.gambar}`" :alt="table.data.nama" thumbnail fluid style="width:300px;height:300px;" height="auto" blank-color="#bbb"/>
         <b-img v-else blank slot="aside" :alt="table.data.nama" thumbnail fluid  blank-color="#bbb" width="230"/>
         <div class="p-3">
-          <h4>{{ table.data.nama }} - {{ table.data.upc }}</h4>
+          <!-- <h4>{{ this.gambar}}</h4> -->
           <p class="font-weight-light">
             <span v-if="table.data.harga">{{ table.data.harga.currency }} {{ table.data.harga.nominal | toCurrency }}</span>
           </p>
-          <p class="mb-1"><strong>Kategori</strong></p>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <b-form-group label="UPC">
+                <b-form-input data-vv-name="UPC" v-validate="'required'" v-model="upc" :state="errors.has('UPC')" placeholder="UPC Produk"></b-form-input>
+                <b-form-invalid-feedback :force-show="errors.has('UPC')">{{ errors.first('UPC') }}</b-form-invalid-feedback>
+              </b-form-group>
+            </div>
+            <div class="col-12 col-md-6">
+              <b-form-group label="Nama Produk">
+                <b-form-input data-vv-name="Nama Produk" v-validate="'required'" v-model="nama" :state="errors.has('Nama Produk')" placeholder="Nama Produk"></b-form-input>
+                <b-form-invalid-feedback :force-show="errors.has('Nama Produk')">{{ errors.first('Nama Produk') }}</b-form-invalid-feedback>
+              </b-form-group>
+            </div>
+            <div class="col-12 col-md-6">
+              <b-form-group label="URL Gambar">
+                <b-form-input data-vv-name="URL Gambar" v-validate="'required'" v-model="gambar" :state="errors.has('URL Gambar')" placeholder="URL Gambar"></b-form-input>
+                <b-form-valid-feedback :force-show="errors.has('URL Gambar')">{{ errors.first('URL Gambar') }}</b-form-valid-feedback>
+              </b-form-group>
+            </div>
+          </div>
           <div v-if="table.data.list_grup">
             <b-badge class="mr-1" variant="primary" v-for="grup in table.data.list_grup">
               {{grup.keyword.substring(grup.keyword.lastIndexOf(",") + 1)}}
@@ -55,7 +71,7 @@
                 :fields="[
                   {key: 'harga', label: 'Harga', thClass: 'font-weight-bold border-top-0'}, 
                   {key: 'mulai', label: 'Berlaku Tgl', thClass: 'font-weight-bold border-top-0'}, 
-                  {key: 'penetapan', label: 'Satuan', thClass: 'font-weight-bold border-top-0'}
+                  {key: 'pengaturan', label: 'Satuan', thClass: 'font-weight-bold border-top-0'}
                 ]"
                 :items="table.data.list_harga">
                 <template slot="harga" slot-scope="data">
@@ -66,12 +82,32 @@
                   <span v-if="data.item.mulai">{{ data.item.mulai.date | toDateTime }}</span>
                 </template>
 
-                <template slot="penetapan" slot-scope="data">
-                  <span v-if="data.item.penetapan" class="text-uppercase">{{ data.item.penetapan.satuan }}</span>
+                <template slot="pengaturan" slot-scope="data">
+                  <span v-if="data.item.pengaturan" class="text-uppercase">{{ data.item.pengaturan.penetapan.bundle }}   {{ data.item.pengaturan.penetapan.satuan }}</span>
                 </template>
               </b-table>
             </b-card>
           </div>
+          <div class="clearfix">&nbsp;</div>          
+          <div class="clearfix">&nbsp;</div>
+           <!-- keyword -->
+          <p v-if="table.data.list_keyword && table.data.list_keyword.length != 0"><strong>Keyword</strong></p>
+          <div v-if="table.data.list_keyword && table.data.list_keyword.length != 0">
+            <b-card header-tag="header" class="w-100">
+              <b-table hover small
+                show-empty
+                :empty-text="'Belum ada Keyword'"
+                class="text-capitalize"
+                :fields="[ 
+                {key: 'word', label: 'Keyword', thClass: 'font-weight-bold border-top-0'}, 
+                {key: 'tag', label: 'Tag', thClass: 'font-weight-bold border-top-0'}]"
+                :items="table.data.list_keyword">
+              </b-table>
+            </b-card>
+            <div class="clearfix">&nbsp;</div>
+          </div>
+          <div class="clearfix">&nbsp;</div>
+
         </div>
         <div class="clearfix">&nbsp;</div>
       </b-media>
@@ -80,7 +116,7 @@
 </template>
 
 <script>
-import CatalogQuery from '~/apollo/queries/query_catalog'
+import CatalogQuery from '~/apollo/queries/query_produk'
 
 export default {
   props: {
@@ -111,7 +147,11 @@ export default {
       table: {
         data: [],
         filter: {}
-      }
+      },
+      tenantID: '',
+      gambar: '',
+      upc: '',
+      nama: ''
     }
   },
   mounted () {
@@ -122,9 +162,12 @@ export default {
       let vm = this
       vm.table.data = []
       let queryVar = {}
-
+      var tenantTemp = []
+      tenantTemp = Object.values(this.$route.query)
+      this.tenantID = tenantTemp.join('')
+      console.log(this.tenantID)
       queryVar.upc = this.$route.params.upc
-      queryVar.owner = this.$route.query.owner
+      queryVar.tenant_id = this.tenantID
 
       this.$apollo.query(
         {
@@ -133,7 +176,10 @@ export default {
           fetchPolicy: 'no-cache'
         }
       ).then(function (result) {
-        vm.table.data = result.data.pengaturanBarang[0]
+        vm.gambar = result.data.KATListProduk[0].galeri.thumbnail
+        vm.upc = result.data.KATListProduk[0].upc
+        vm.nama = result.data.KATListProduk[0].nama
+        vm.table.data = result.data.KATListProduk[0]
       }).catch(e => {
         if (e.graphQLErrors && Array.isArray(e.graphQLErrors) && e.graphQLErrors.length) {
           e.graphQLErrors.forEach(function (error) {
