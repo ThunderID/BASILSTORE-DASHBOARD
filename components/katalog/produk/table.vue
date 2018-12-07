@@ -1,8 +1,12 @@
 <template>
   <div v-if="tenantID !== null">
+    
     <ApolloQuery :query="require('@/apollo/queries/query_produk.gql')"
-    :variables="{ takes: 15, tenant_id: (tenantID) ? tenantID : null }">
+    :variables="{ takes: 15, tenant_id: (tenantID) ? tenantID : null }" :fetchPolicy="'no-cache'" >
       <template slot-scope="{ result: { loading, error, data } }">
+        <!-- <div>
+          {{data}}
+        </div> -->
         <div v-if="loading">Loading...</div>
         <div v-else-if="error" class="alert alert-danger">An error occured</div>
         <div v-else-if="data">
@@ -19,11 +23,11 @@
                 </tr>
               </thead>
               <tbody v-if="(data.KATListProduk !== null) && (data.KATListProduk.length !== 0)">
-                <tr v-for="(item, index) in data.KATListProduk">
+                <tr v-for="(item, index) in data.KATListProduk" @click="rowClicked(item, tenantID)">
                   <td>{{ index+1 }}</td>
                   <td>{{ item.upc }}</td>
                   <td>{{ item.nama }}</td>
-                  <td class="text-center">{{ item.galeri.thumbnail }}</td>
+                  <td class="text-center"><b-img style="width:150px;height:150px;" :src="`${item.galeri.thumbnail}`" fluid alt="Responsive image" /></td>
                   <td class="text-center">{{ item.pengaturan.is_stok }}</td>
                   <td><b-link :to="{ name: 'katalog-kategori-add', query: { tenant: tenantID, id: item.id } }" disabled class="btn btn-link">Edit</b-link></td>
                 </tr>
@@ -116,15 +120,7 @@ export default {
   },
   data () {
     return {
-      // table: {
-      //   data: [],
-      //   filter: {},
-      //   availableHeaders: [
-      //     { key: 'upc', label: 'UPC', sortable: true },
-      //     { key: 'nama', label: 'Nama', sortable: true },
-      //     { key: 'thumbnail', label: 'Gambar', sortable: false }
-      //   ]
-      // }
+      tenantID: ''
     }
   },
   mounted () {
@@ -172,11 +168,11 @@ export default {
   //       }
   //     })
   //   },
-  //   rowClicked (record, index) {
-  //     let vm = this
-  //     // console.log(vm.dataFilter)
-  //     vm.$nuxt.$router.replace({path: '/catalog/product/' + record.upc, query: vm.dataFilter})
-  //   }
+    rowClicked (record, tenant, index) {
+      let vm = this
+      console.log(record + tenant)
+      vm.$nuxt.$router.replace({path: '/katalog/produk/' + record.upc, query: tenant})
+    }
   }
 }
 </script>

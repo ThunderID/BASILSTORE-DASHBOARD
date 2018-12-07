@@ -14,8 +14,8 @@
           <tr v-for="(option, index) in tableOpsi">
             <td>{{ option.judul }}</td>
             <td><span v-if="option.varian.length !== 0">Memiliki Varian</span></td>
-            <td class="text-center">{{ option.bundle }}</td>
-            <td style="width: 10%;"><b-link class="text-danger" @click="removeVarian(index)"><i class="fas fa-minus"></i></b-link></td>
+            <td class="text-center">{{ option.bundle.kuantitas }}   {{option.bundle.satuan}}</td>
+            <td style="width: 10%;"><b-link class="text-danger" @click="removeData(index)"><i class="fas fa-minus"></i></b-link></td>
           </tr>
         </tbody>
         <tbody v-else>
@@ -33,8 +33,11 @@
             </b-form-group>
           </b-col>
           <b-col cols="12" md="4">
-            <b-form-group label="Bundle">
-              <b-form-input type="number" v-model="bundle"></b-form-input>
+            <b-form-group label="Kuantitas">
+              <b-form-input type="number" v-model="kuantitas"></b-form-input>
+            </b-form-group>
+            <b-form-group label="Satuan">
+              <b-form-input type="text" v-model="satuan"></b-form-input>
             </b-form-group>
           </b-col>
         </b-row>
@@ -50,6 +53,7 @@
                     <th>Parameter</th>
                     <th>Value</th>
                     <th>Bundle</th>
+                    <th>Satuan</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -58,7 +62,8 @@
                     <td><b-form-input type="text" placeholder="SKU" v-model="varian.sku"></b-form-input></td>
                     <td><b-form-input type="text" placeholder="Parameters" v-model="varian.parameter"></b-form-input></td>
                     <td><b-form-input type="text" placeholder="Value" v-model="varian.value"></b-form-input></td>
-                    <td><b-form-input type="text" placeholder="Budle" v-model="varian.bundle"></b-form-input></td>
+                    <td><b-form-input type="text" placeholder="Kuantitas" v-model="varian.bundle.kuantitas"></b-form-input></td>
+                    <td><b-form-input type="text" placeholder="Satuan" v-model="varian.bundle.satuan"></b-form-input></td>
                     <td class="pt-3" style="width: 10%;"><b-link class="text-danger" @click="removeVarian(index)"><i class="fas fa-minus"></i></b-link></td>
                   </tr>
                   <tr v-if="tempVarian.length === 0">
@@ -85,7 +90,10 @@ export default {
       dataOpsi: [],
       dataVarian: [],
       judul: '',
-      bundle: 0
+      bundle: {
+        kuantitas: 0,
+        satuan: ''
+      }
     }
   },
   computed: {
@@ -100,22 +108,32 @@ export default {
         sku: '',
         parameter: '',
         value: '',
-        bundle: 0
+        bundle: {
+          kuantitas: 0,
+          satuan: ''
+        }
       })
     },
     removeVarian (idx) {
       this.tempVarian.splice((idx), 1)
     },
+    removeData (idx) {
+      this.tableOpsi.splice((idx), 1)
+    },
     saveOpsi () {
       this.dataOpsi.push({
         judul: this.judul,
-        bundle: this.bundle,
+        bundle: {
+          kuantitas: this.kuantitas,
+          satuan: this.satuan
+        },
         varian: this.tempVarian
       })
       this.tempOpsi = []
       this.tempVarian = []
       this.judul = ''
       this.bundle = 0
+      this.$emit('SUCCESS', this.tableOpsi)
     },
     addOpsi () {
       this.tempOpsi.push({

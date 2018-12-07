@@ -19,7 +19,7 @@
             <td class="text-center">{{ option.hingga.date }} | {{ option.hingga.timezone }} </td>
             <td class="text-center">{{ option.pengaturan.penetapan.satuan }}</td>
             <td class="text-center">{{ option.pengaturan.penetapan.bundle }}</td>
-            <td></td>
+            <td class="pt-3" style="width: 10%;"><b-link class="text-danger" @click="removeData(index)"><i class="fas fa-minus"></i></b-link></td>
             <!-- <td>{{ option.judul }}</td>
             <td><span v-if="option.varian.length !== 0">Memiliki Varian</span></td>
             <td class="text-center">{{ option.bundle }}</td>
@@ -51,14 +51,12 @@
         <b-row>
           <b-col cols="12" md="6">
             <b-form-group label="Mulai Tanggal" class="form-inline">
-              <input type="text" v-model="dateMulai" v-mask="'##/##/####'" class="form-control mr-1"/>
-              <input type="text" v-model="timezoneMulai" v-mask="'##:##'" class="form-control w-25"/>
+              <input type="text" v-model="dateMulai" v-mask="'####-##-## ##:##:##'" class="form-control mr-1"/>
             </b-form-group>
           </b-col>
           <b-col cols="12" md="6">
             <b-form-group label="Hingga Tanggal" class="form-inline">
-              <input type="text" v-model="dateHingga" v-mask="'##/##/####'" class="form-control mr-1"/>
-              <input type="text" v-model="timezoneHingga" v-mask="'##:##'" class="form-control w-25"/>
+              <input type="text" v-model="dateHingga" v-mask="'####-##-## ##:##:##'" class="form-control mr-1"/>
             </b-form-group>
           </b-col>
         </b-row>
@@ -87,8 +85,8 @@ import moment from 'moment'
 import 'moment/locale/id'
 export default {
   data () {
-    let dateNow = moment().format('DD/MM/YYYY')
-    let timezone = moment().format('HH:mm')
+    let dateNow = moment().format('YYYY-MM-DD HH:mm:ss')
+    let timezone = 'Asia/Jakarta'
     let selectCurrency = 'idr'
 
     return {
@@ -97,7 +95,7 @@ export default {
       currency: selectCurrency,
       dateMulai: dateNow,
       timezoneMulai: timezone,
-      dateHingga: moment().add(1, 'days').format('DD/MM/YYYY'),
+      dateHingga: moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss'),
       timezoneHingga: timezone,
       satuan: '',
       bundle: 0,
@@ -135,6 +133,10 @@ export default {
           }
         }
       })
+      this.$emit('SUCCESS', this.tableHarga)
+    },
+    removeData (idx) {
+      this.tableHarga.splice((idx), 1)
     }
   }
 }
