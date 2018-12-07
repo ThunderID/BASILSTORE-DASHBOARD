@@ -1,0 +1,9 @@
+#import "./../fragment/unit.gql"
+
+fragment item on OrderItem {
+	sku,
+	nama,
+	jumlah {
+		...unit
+	}
+}

@@ -1,7 +1,7 @@
 <template>
   <div v-if="tenantID !== null">
     <ApolloQuery :query="require('@/apollo/queries/query_group.gql')"
-      :variables="{ takes: 15, tenant_id: (tenantID) ? tenantID : null }">
+      :variables="{ take: 15, tenant_id: (tenantID) ? tenantID : null }">
       <template slot-scope="{ result: { loading, error, data } }">
         <div v-if="loading" class="halo">Loading...</div>
         <div v-else-if="error">

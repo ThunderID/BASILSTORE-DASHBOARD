@@ -1,0 +1,4 @@
+fragment unit on Unit {
+	kuantitas,
+	satuan
+}

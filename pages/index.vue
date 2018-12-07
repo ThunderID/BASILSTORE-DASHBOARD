@@ -11,14 +11,14 @@
     </b-alert>
     <p>Silakan masukkan email dan password anda</p>
     
-    <LoginForm class='m-t-lg' @SUCCESS="onLoginSuccess" @FAIL="onLoginFail"></LoginForm>
+    <LoginForm class='m-t-lg v-step-1' @SUCCESS="onLoginSuccess" @FAIL="onLoginFail"></LoginForm>
     
     <p class='mt-2'>
       <nuxt-link to="/register">Daftar</nuxt-link> &nbsp;·&nbsp;
       <nuxt-link to="/forget-password">Lupa Password</nuxt-link>
     </p>
-
     
+    <v-tour name="myTour" :steps="steps"></v-tour>
   </div>
 </template>
 

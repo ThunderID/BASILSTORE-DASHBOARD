@@ -72,7 +72,8 @@ module.exports = {
     '~/plugins/vue-select.js',
     '~/plugins/vue-js-toggle.js',
     '~/plugins/vue-the-mask.js',
-    '~/plugins/vue-money.js'
+    '~/plugins/vue-money.js',
+    '~/plugins/vue-tour.js'
   ],
   router: {
     // linkActiveClass: null

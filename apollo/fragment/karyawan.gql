@@ -1,0 +1,4 @@
+fragment karyawan on Karyawan {
+	username,
+	nama
+}
