@@ -20,10 +20,6 @@
             <td class="text-center">{{ option.pengaturan.penetapan.satuan }}</td>
             <td class="text-center">{{ option.pengaturan.penetapan.bundle }}</td>
             <td class="pt-3" style="width: 10%;"><b-link class="text-danger" @click="removeData(index)"><i class="fas fa-minus"></i></b-link></td>
-            <!-- <td>{{ option.judul }}</td>
-            <td><span v-if="option.varian.length !== 0">Memiliki Varian</span></td>
-            <td class="text-center">{{ option.bundle }}</td>
-            <td style="width: 10%;"><b-link class="text-danger" @click=""><i class="fas fa-minus"></i></b-link></td> -->
           </tr>
         </tbody>
         <tbody v-else>

@@ -1,4 +1,5 @@
 fragment keyword on BProdukKeyword {
+	id,
 	word,
 	tag
 }

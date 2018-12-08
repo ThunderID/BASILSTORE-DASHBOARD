@@ -48,9 +48,9 @@
             </b-form-checkbox>
           </b-col>
         </b-row>
-        <!-- <div>
-          <p>{{showKeyword}}</p>
-        </div> -->
+        <div>
+          <p>{{showOpsi}}</p>
+        </div>
         <div class="clearfix">&nbsp;</div>
         <div class="clearfix">&nbsp;</div>
 

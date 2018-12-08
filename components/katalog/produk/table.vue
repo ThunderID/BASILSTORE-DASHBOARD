@@ -19,7 +19,6 @@
                   <th class="text-left">Nama</th>
                   <th class="text-center">Thumbnail</th>
                   <th class="text-center">Stok</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody v-if="(data.KATListProduk !== null) && (data.KATListProduk.length !== 0)">
@@ -29,7 +28,6 @@
                   <td>{{ item.nama }}</td>
                   <td class="text-center"><b-img style="width:150px;height:150px;" :src="`${item.galeri.thumbnail}`" fluid alt="Responsive image" /></td>
                   <td class="text-center">{{ item.pengaturan.is_stok }}</td>
-                  <td><b-link :to="{ name: 'katalog-kategori-add', query: { tenant: tenantID, id: item.id } }" disabled class="btn btn-link">Edit</b-link></td>
                 </tr>
               </tbody>
               <tbody v-else>
