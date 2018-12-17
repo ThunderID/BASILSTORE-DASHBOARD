@@ -3,12 +3,12 @@
     <b-row class="justify-content-center">
       <b-col cols="12" md="10">
         <b-row align-h="end">
-          <b-col cols="12" md="7">
+          <b-col cols="12" md="12">
             <b-button variant="secondary" :to="{ name: 'katalog-kategori' }">Kembali</b-button>
           </b-col>
-          <b-col cols="12" md="5">
+          <!-- <b-col cols="12" md="5">
             <SelectToko @SELECTED="SelectedToko"></SelectToko>
-          </b-col>
+          </b-col> -->
         </b-row>
         <div class="clearfix">&nbsp;</div>
         <b-card title="Form Kategori">

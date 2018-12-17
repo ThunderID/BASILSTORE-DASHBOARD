@@ -93,7 +93,7 @@ export default {
         }).then(function (res) {
           console.log(res)
           vm.isLoading = false
-          vm.$nuxt.$router.replace({ path: '/manajemen/toko' })
+          vm.$emit('SUCCESS', res)
         }).catch(function (e) {
           console.log(e)
           vm.$emit('FAIL', e)

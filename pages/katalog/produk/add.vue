@@ -41,7 +41,7 @@ export default {
     },
     onUpdateCatalogSuccess (data) {
       console.log({'sukses': data})
-      // this.$nuxt.$router.replace('/catalog/product')
+      this.$nuxt.$router.replace('/katalog/produk')
     },
     onUpdateCatalogFail (data) {
       console.log({'gagal': data})
