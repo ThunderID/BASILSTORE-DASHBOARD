@@ -112,19 +112,19 @@
           <div class="row">
             <div class="col-12 col-md-6">
               <b-form-group label="UPC">
-                <b-form-input data-vv-name="upc" v-validate="'required'" v-model="editUpc" :state="errors.has('upc')" placeholder="UPC produk" readonly></b-form-input>
+                <b-form-input data-vv-name="upc" v-validate="'required'" v-model="editUpc" placeholder="UPC produk" readonly></b-form-input>
                 <b-form-invalid-feedback :force-show="errors.has('upc')">{{ errors.first('upc') }}</b-form-invalid-feedback>
               </b-form-group>
             </div>
             <div class="col-12 col-md-6">
               <b-form-group label="Nama Produk">
-                <b-form-input data-vv-name="nama" v-validate="'required'" v-model="editNama" :state="errors.has('nama')" placeholder="Nama Produk"></b-form-input>
+                <b-form-input data-vv-name="nama" v-validate="'required'" v-model="editNama" placeholder="Nama Produk"></b-form-input>
                 <b-form-invalid-feedback :force-show="errors.has('nama')">{{ errors.first('nama') }}</b-form-invalid-feedback>
               </b-form-group>
             </div>
             <div class="col-12 col-md-6">
               <b-form-group label="Link Gambar">
-                <b-form-input data-vv-name="gambar" v-validate="'required'" v-model="editGambar" :state="errors.has('gambar')" placeholder="gambar Produk"></b-form-input>
+                <b-form-input data-vv-name="gambar" v-validate="'required'" v-model="editGambar" placeholder="gambar Produk"></b-form-input>
                 <b-form-invalid-feedback :force-show="errors.has('gambar')">{{ errors.first('gambar') }}</b-form-invalid-feedback>
               </b-form-group>
             </div>
@@ -339,12 +339,12 @@
                   <div class="table-responsive">
                       <b-col cols="12" md="8">
                         <b-form-group label="Word">
-                          <b-form-input v-model="word"></b-form-input>
+                          <SelectKategori @SELECTED="SelectedKategori"></SelectKategori>
                         </b-form-group>
                       </b-col>
                       <b-col cols="12" md="8">
                         <b-form-group label="Tag">
-                          <b-form-input type="text" v-model="tag"></b-form-input>
+                          <b-form-input type="text" v-model="tag" readonly></b-form-input>
                         </b-form-group>
                       </b-col>
                   </div>
@@ -358,12 +358,26 @@
         <template>
           <b-button type="submit" variant="primary" block @click="onSubmit">Simpan</b-button>
         </template>
+        <template>
+          <b-button type="button" v-b-modal="'warning'" data-target="#warning" data-toggle="modal" variant="danger" block>Hapus Produk</b-button>
+        </template>
       </b-media>
     </b-card>
+    <!-- Modal -->
+   <b-modal id="warning" title="Hapus Katalog" size="lg" @ok="hapusProduk" ok-title="Hapus" ok-variant="danger" cancel-variant="light" no-close-on-backdrop>
+      <b-container>
+        <div>
+          Anda yakin untuk menghapus ?
+        </div>
+      </b-container>
+    </b-modal>
   </div>
+
+  
 </template>
 
 <script>
+import SelectKategori from '~/components/katalog/produk/select_kategori'
 import CatalogQuery from '~/apollo/queries/query_produk'
 import UpdateKatalog from '~/apollo/mutations/UpdateProduk'
 import moment from 'moment'
@@ -383,6 +397,7 @@ export default {
       }
     }
   },
+  components: { SelectKategori },
   apollo: {
     // -----------------------------------------------------------------------------------------------------------------------
     // TO MODIFY
@@ -416,6 +431,7 @@ export default {
       upc: '',
       nama: '',
       x: 0,
+      tag: 'kategori',
       editUpc: '',
       editGambar: '',
       editNama: '',
@@ -436,6 +452,11 @@ export default {
     this.fetch()
   },
   methods: {
+    SelectedKategori (data) {
+      if (data) {
+        this.word = data.nama
+      }
+    },
     fetch () {
       let vm = this
       vm.table.data = []
@@ -625,7 +646,6 @@ export default {
         tag: this.tag
       })
       this.word = ''
-      this.tag = ''
     },
     onSubmit (e) {
       // this.x = 0
@@ -662,7 +682,7 @@ export default {
           console.log('SUCCESS')
           vm.isLoading = false
           //  + vm.transformedData.upc, query: vm.transformedData.tenant_id
-          vm.$nuxt.$router.replace({ path: '/katalog/produk/' })
+          window.location.reload()
         }).catch(function (e) {
           console.log(e)
           vm.$emit('FAIL', e)

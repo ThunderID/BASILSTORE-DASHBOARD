@@ -7,8 +7,7 @@
         updateGrup: {
           id,
           nama,
-          tipe,
-          parent_id: parentID
+          tipe
         }
       }"
       @done="onDone">
@@ -21,16 +20,16 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col cols="12" md="6">
+          <b-col cols="12">
             <b-form-group label="Tipe">
               <b-form-input v-model="tipe"></b-form-input>
             </b-form-group>
           </b-col>
-          <b-col cols="12" md="6">
+          <!-- <b-col cols="12" md="6">
             <b-form-group label="Parent">
               <b-form-input v-model="parentID"></b-form-input>
             </b-form-group>
-          </b-col>
+          </b-col> -->
         </b-row>
         <div class="clearfix">&nbsp;</div>
         <div class="clearfix">&nbsp;</div>
@@ -60,6 +59,7 @@ export default {
   },
   methods: {
     onDone (result) {
+      window.location.reload()
       if (result) {
         this.id = null
         this.nama = ''

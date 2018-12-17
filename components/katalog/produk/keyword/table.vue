@@ -31,12 +31,12 @@
             <div class="table-responsive">
                 <b-col cols="12" md="8">
                   <b-form-group label="Word">
-                    <b-form-input v-model="word"></b-form-input>
+                    <SelectKategori @SELECTED="SelectedKategori"></SelectKategori>
                   </b-form-group>
                 </b-col>
                 <b-col cols="12" md="8">
                   <b-form-group label="Tag">
-                    <b-form-input type="text" v-model="tag"></b-form-input>
+                    <b-form-input type="text" v-model="tag" readonly></b-form-input>
                   </b-form-group>
                 </b-col>
             </div>
@@ -48,21 +48,28 @@
 </template>
 
 <script>
+import SelectKategori from '~/components/katalog/produk/select_kategori'
 export default {
   data () {
     return {
       stateVarian: true,
       dataKeyword: [],
       word: '',
-      tag: ''
+      tag: 'kategori'
     }
   },
+  components: { SelectKategori },
   computed: {
     tableKeyword: function () {
       return this.dataKeyword
     }
   },
   methods: {
+    SelectedKategori (data) {
+      if (data) {
+        this.word = data.nama
+      }
+    },
     removeData (idx) {
       this.tableKeyword.splice((idx), 1)
     },
@@ -72,7 +79,6 @@ export default {
         tag: this.tag
       })
       this.word = ''
-      this.tag = ''
       this.$emit('SUCCESS', this.tableKeyword)
     }
   }

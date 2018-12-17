@@ -55,11 +55,9 @@
               </b-button>
             </b-col>
           </b-row>
-          
         </b-form>
       </div>
     </b-card>
-
   </div>
 </template>
 

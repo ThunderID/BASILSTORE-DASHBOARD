@@ -27,7 +27,8 @@
                   <td>{{ item.upc }}</td>
                   <td>{{ item.nama }}</td>
                   <td class="text-center"><b-img style="width:150px;height:150px;" :src="`${item.galeri.thumbnail}`" fluid alt="Responsive image" /></td>
-                  <td class="text-center">{{ item.pengaturan.is_stok }}</td>
+                  <td v-if="item.pengaturan.is_stok" class="text-center">Tersedia</td>
+                  <td v-else class="text-center">Kosong</td>
                 </tr>
               </tbody>
               <tbody v-else>

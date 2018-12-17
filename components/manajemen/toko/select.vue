@@ -23,7 +23,7 @@ export default {
   methods: {
     getValue (data) {
       this.$emit('SELECTED', data)
-      this.$router.push({query: { tenantID: data.id }})
+      // this.$router.push({query: { tenantID: data.id }})
     }
   }
 }
