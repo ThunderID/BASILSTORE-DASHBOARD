@@ -5,7 +5,7 @@
         <b-row align-h="end">
           <b-col cols="12" md="1"><h4 class="text-right"></h4></b-col>
           <b-col cols="12" md="5">
-            <SelectToko @SELECTED="SelectedToko"></SelectToko>
+            <SelectToko @SELECTED_TOKO="SelectedToko"></SelectToko>
           </b-col>
         </b-row>
         <b-row align-h="between">

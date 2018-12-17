@@ -12,7 +12,7 @@
         }
       }"
       @done="onDone">
-      <template slot-scope="{mutate, loading, gqlError: error }"> 
+      <template slot-scope="{mutate, loading, gqlError: error }">
         <b-row>
           <b-col cols="12">
             <b-form-group label="Nama">
