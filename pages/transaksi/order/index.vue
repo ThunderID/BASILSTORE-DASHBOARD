@@ -5,7 +5,7 @@
         <b-row align-h="end">
           <b-col cols="12" md="1"><h4 class="text-right"></h4></b-col>
           <b-col cols="12" md="5">
-            <SelectToko @SELECTED_TOKO="SelectedToko" :tenantID="tenantData"></SelectToko>
+            <SelectToko @SELECTED_TOKO="SelectedToko"></SelectToko>
           </b-col>
         </b-row>
         <b-row align-h="between">
@@ -30,7 +30,7 @@ import TableSales from '~/components/transaksi/sales/table'
 export default {
   data () {
     return {
-      tenantData: (this.$route.query.tenantID) ? this.$route.query.tenantID : ''
+      tenantData: (this.$route.query.tenantID) ? this.$route.query.tenantID : null
     }
   },
   components: { SelectToko, TableSales },
