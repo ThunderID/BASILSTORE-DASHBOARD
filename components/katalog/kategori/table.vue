@@ -26,7 +26,7 @@
                 </tr>
               </thead>
               <tbody v-if="(data.KATGrup !== null) && (data.KATGrup.length !== 0)">
-                <tr v-for="(item, index) in data.KATGrup">
+                <tr v-for="(item, index) in data.KATGrup" @click="rowClicked(item, tenantID)">
                   <td>{{ index+1 }}</td>
                   <td>{{ item.nama }}</td>
                   <td>{{ item.slug }}</td>
@@ -59,6 +59,13 @@ export default {
   props: {
     tenantID: {
       type: String
+    }
+  },
+  methods: {
+    rowClicked (record, tenant, index) {
+      let vm = this
+      console.log(record.id + tenant)
+      vm.$nuxt.$router.replace({path: '/katalog/kategori/' + record.id, query: tenant})
     }
   }
 }

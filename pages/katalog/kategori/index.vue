@@ -9,7 +9,7 @@
           </b-col>
         </b-row>
         <b-row align-h="between">
-          <b-col>
+          <b-col v-if="tenantData !== null">
             <b-button variant="primary mb-3 px-3" :to="{ name: 'katalog-kategori-add', query: { tenantID: tenantData }}">Tambah Baru</b-button>
           </b-col>
         </b-row>
