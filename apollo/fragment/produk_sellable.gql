@@ -1,0 +1,10 @@
+#import "./../fragment/opsi.gql"
+#import "./../fragment/harga.gql"
+
+fragment produk on Barang {
+	upc,
+	nama,
+	galeri {thumbnail},
+	opsi {...opsi},
+	harga { ...subHarga}
+}

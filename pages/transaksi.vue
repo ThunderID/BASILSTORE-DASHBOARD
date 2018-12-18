@@ -4,7 +4,7 @@
       <b-row>
         <b-col cols="12" md="3" xl="2" class="bg-white border-right border-bottom" style="height: 100vh">
           <b-nav vertical class="py-4">
-            <b-nav-item :to="{ name: 'transaksi-sales-order' }" class="text-secondary" >Sales Order</b-nav-item>
+            <b-nav-item :to="{ name: 'transaksi-order' }" class="text-secondary" >Sales Order</b-nav-item>
           </b-nav>
         </b-col>
         <b-col>

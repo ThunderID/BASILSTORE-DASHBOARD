@@ -8,8 +8,11 @@
         <div v-else-if="data">
           <b-form inline class="bg-white box-shadow border rounded p-2">
             <i class="fas fa-store-alt fa-lg"></i>&nbsp;&nbsp;
-            <b-form-group style="width: 80%;">
-              <v-select no-data-text :value="selected" :options="data.MANListTenant" label="nama" @input="getValue" class="w-100"></v-select>
+            <b-form-group style="width: 90%;">
+              <v-select no-data-text :options="data.MANListTenant" label="nama" 
+                @input="getValue"
+                placeholder="Pilih Toko">
+              </v-select>
             </b-form-group>
           </b-form>
         </div>
@@ -22,8 +25,8 @@
 export default {
   methods: {
     getValue (data) {
-      this.$emit('SELECTED', data)
-      // this.$router.push({query: { tenantID: data.id }})
+      this.$emit('SELECTED_TOKO', data)
+      this.$router.push({query: { tenantID: data.id }})
     }
   }
 }

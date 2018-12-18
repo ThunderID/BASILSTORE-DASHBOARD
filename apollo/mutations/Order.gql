@@ -1,0 +1,61 @@
+#import "./../fragment/karyawan.gql"
+#import "./../fragment/timezone.gql"
+#import "./../fragment/money.gql"
+#import "./../fragment/unit.gql"
+#import "./../fragment/produkPengaturanHarga.gql"
+
+mutation SALOrdering (
+	$tenant_id: String!,
+	$nomor: String,
+	$tambahDetail: [IOrderDetail],
+	$hapusDetail: [String],
+	$checkout: Boolean,
+	$recalculate: Boolean
+) {
+	SALOrdering (
+		tenant_id: $tenant_id,
+		nomor: $nomor,
+		tambahDetail: $tambahDetail,
+		hapusDetail: $hapusDetail,
+		checkout: $checkout,
+		recalculate: $recalculate
+	) {
+		nomor,
+		judul,
+		pemesan {
+			...karyawan
+		},
+		penyedia {
+			...karyawan
+		},
+		kadaluarsa {
+			...timezone
+		},
+		total {
+			...money
+		},
+		detail {
+			upc,
+			nama,
+			harga {
+				...money
+			},
+			jumlah {
+				...unit
+			},
+			subtotal {
+				...money
+			},
+			pengaturan {
+				...subPengaturanHarga
+			},
+			item {
+				sku,
+				nama,
+				jumlah {
+					...unit
+				}
+			}
+		}
+	}
+}

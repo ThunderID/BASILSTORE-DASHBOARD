@@ -1,0 +1,22 @@
+#import "./../fragment/produk_sellable.gql"
+#import "./../fragment/harga.gql"
+
+query KATProduk (
+	$skip: Int,
+	$take: Int,
+	$tenant_id: String!,
+	$upc: String
+) {
+	KATProduk
+	(
+		skip: $skip,
+		take: $take,
+		tenant_id: $tenant_id,
+		upc: $upc
+	) {
+		...produk
+		harga {
+			...subHarga
+		}
+	}
+}

@@ -1,16 +1,16 @@
 <template>
   <b-container fluid>
     <b-row class="justify-content-center">
-      <b-col cols="12" md="10">
+      <b-col cols="12" md="12">
         <b-row align-h="end">
           <b-col cols="12" md="1"><h4 class="text-right"></h4></b-col>
           <b-col cols="12" md="5">
-            <SelectToko @SELECTED="SelectedToko"></SelectToko>
+            <SelectToko @SELECTED_TOKO="SelectedToko"></SelectToko>
           </b-col>
         </b-row>
         <b-row align-h="between">
           <b-col>
-            <b-button variant="primary mb-3 px-3" to="">Tambah Baru</b-button>
+            <b-button variant="primary mb-3 px-3" :to="{ name: 'transaksi-order-add', query: (tenantData) ? { tenantID: tenantData } : ''}">Order Baru</b-button>
           </b-col>
         </b-row>
         <b-card title="Sales">
@@ -30,13 +30,15 @@ import TableSales from '~/components/transaksi/sales/table'
 export default {
   data () {
     return {
-      tenantData: null
+      tenantData: (this.$route.query.tenantID) ? this.$route.query.tenantID : null
     }
   },
   components: { SelectToko, TableSales },
   methods: {
     SelectedToko (data) {
-      if (data) this.tenantData = data.id
+      if (data) {
+        this.tenantData = data.id
+      }
     }
   },
   computed: {
