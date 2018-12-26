@@ -62,11 +62,11 @@ export default {
     }
   },
   methods: {
-    rowClicked (record, tenant, index) {
-      let vm = this
-      console.log(record.id + tenant)
-      vm.$nuxt.$router.replace({path: '/katalog/kategori/' + record.id, query: tenant})
-    }
+    // rowClicked (record, tenant, index) {
+    //   let vm = this
+    //   console.log(record.id + tenant)
+    //   vm.$nuxt.$router.replace({path: '/katalog/kategori/' + record.id, query: tenant})
+    // }
   }
 }
 </script>

@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import TokoQuery from '~/apollo/queries/query_toko'
+import KategoriQuery from '~/apollo/queries/query_group'
 import UpdateTenant from '~/apollo/mutations/UpdateTenant'
 
 export default {
@@ -82,7 +82,8 @@ export default {
         nama: '',
         tipe: 'kategori'
       },
-      id: ''
+      id: '',
+      tenantID: ''
     }
   },
   mounted () {
@@ -102,19 +103,22 @@ export default {
       let vm = this
       vm.table.data = []
       let queryVar = {}
+      var tenantTemp = []
+      tenantTemp = Object.values(this.$route.query)
+      this.tenantID = tenantTemp.join('')
+      console.log(this.tenantID)
 
-      queryVar.id = this.$route.params.id
+      queryVar.jalur = this.$route.params.id
+      queryVar.tenant_id = this.tenantID
 
       this.$apollo.query(
         {
-          query: TokoQuery,
+          query: KategoriQuery,
           variables: queryVar,
           fetchPolicy: 'no-cache'
         }
       ).then(function (result) {
-        vm.form.nama = result.data.MANListTenant[0].nama
-        vm.form.jenis = result.data.MANListTenant[0].jenis
-        vm.form.industri = result.data.MANListTenant[0].industri
+        vm.form.nama = result.data.KATGrup[0].nama
       }).catch(e => {
         if (e.graphQLErrors && Array.isArray(e.graphQLErrors) && e.graphQLErrors.length) {
           e.graphQLErrors.forEach(function (error) {
