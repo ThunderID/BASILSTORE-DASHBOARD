@@ -9,7 +9,7 @@
           <b-form inline class="bg-white box-shadow border rounded p-2">
             <i class="fas fa-store-alt fa-lg"></i>&nbsp;&nbsp;
             <b-form-group style="width: 90%;">
-              <v-select no-data-text :options="data.MANListTenant" label="nama" 
+              <v-select :clearable="false" no-data-text :options="data.MANListTenant" label="nama" 
                 @input="getValue"
                 placeholder="Pilih Toko">
               </v-select>

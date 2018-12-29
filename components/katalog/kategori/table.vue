@@ -1,7 +1,7 @@
 <template>
   <div v-if="tenantID !== null">
     <ApolloQuery :query="require('@/apollo/queries/query_group.gql')"
-      :variables="{ take: 15, tenant_id: (tenantID) ? tenantID : null }">
+      :variables="{ take: 15, tenant_id: (tenantID) ? tenantID : null }" :fetchPolicy="'no-cache'">
       <template slot-scope="{ result: { loading, error, data } }">
         <div v-if="loading" class="halo">Loading...</div>
         <div v-else-if="error">
@@ -22,7 +22,6 @@
                   <th class="text-center">Tipe</th>
                   <th class="text-center">Jalur</th>
                   <th class="text-center">Parent</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody v-if="(data.KATGrup !== null) && (data.KATGrup.length !== 0)">
@@ -33,7 +32,6 @@
                   <td class="text-center">{{ item.tipe }}</td>
                   <td class="text-center">{{ item.jalur }}</td>
                   <td class="text-center">{{ item.parent_id }}</td>
-                  <td><b-link :to="{ name: 'katalog-kategori-add', query: { tenant: tenantID, id: item.id } }" disabled class="btn btn-link">Edit</b-link></td>
                 </tr>
               </tbody>
               <tbody v-else>
@@ -62,11 +60,11 @@ export default {
     }
   },
   methods: {
-    // rowClicked (record, tenant, index) {
-    //   let vm = this
-    //   console.log(record.id + tenant)
-    //   vm.$nuxt.$router.replace({path: '/katalog/kategori/' + record.id, query: tenant})
-    // }
+    rowClicked (record, tenant, index) {
+      let vm = this
+      console.log(record.id + tenant)
+      vm.$nuxt.$router.replace({path: '/katalog/kategori/' + record.id, query: tenant})
+    }
   }
 }
 </script>

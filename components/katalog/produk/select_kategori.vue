@@ -9,7 +9,7 @@
           <b-form inline class="bg-white box-shadow border rounded">
             &nbsp;&nbsp;
             <b-form-group style="width: 90%;">
-              <v-select no-data-text :value="selected" :options="data.KATGrup" label="nama" @input="getValue" class="w-100"></v-select>
+              <v-select :clearable="false" no-data-text :value="selected" :options="data.KATGrup" label="nama" @input="getValue" class="w-100"></v-select>
             </b-form-group>
           </b-form>
         </div>

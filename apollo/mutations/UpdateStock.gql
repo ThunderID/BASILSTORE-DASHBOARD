@@ -1,0 +1,40 @@
+mutation INVStocking(
+	$tenant_id: String,
+    $sku: String,
+    $storage: IEntity,
+    $input: IStok,
+    $tambahDetail: [IStokDetail],
+    $hapusDetail: [String]
+) {
+	INVStocking(
+		tenant_id: $tenant_id,
+        sku: $sku,
+        storage: $storage,
+        input: $input,
+        tambahDetail: $tambahDetail,
+        hapusDetail: $hapusDetail
+	) {
+		sku,
+        nama,
+        storage{
+            id,
+            nama
+        },
+        detail{
+            id,
+            reference{
+                id,
+                tag
+            },
+            kuantitas{
+                kuantitas,
+                satuan
+            },
+            tanggal{
+                date,
+                timezone_type,
+                timezone
+            }
+        }
+	}
+}

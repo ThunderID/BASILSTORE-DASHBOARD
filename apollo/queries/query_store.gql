@@ -6,9 +6,9 @@ query MANListTenant(
 		skip: $skip,
 		take: $take
 	) {
-		id,
-		nama,
-		jenis,
-		industri
+		sku: String
+		nama: String
+		storage: Entity
+		detail: [StokDetail]
 	}
 }

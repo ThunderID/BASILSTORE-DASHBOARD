@@ -1,8 +1,8 @@
 <template>
   <div v-if="tenantID !== null">
     
-    <ApolloQuery :query="require('@/apollo/queries/query_produk.gql')"
-    :variables="{ takes: 15, tenant_id: (tenantID) ? tenantID : null }" :fetchPolicy="'no-cache'" >
+    <ApolloQuery :query="require('@/apollo/queries/query_stock.gql')"
+    :variables="{ tenant_id: (tenantID) ? tenantID : null }" :fetchPolicy="'no-cache'" >
       <template slot-scope="{ result: { loading, error, data } }">
         <!-- <div>
           {{data}}
@@ -21,8 +21,8 @@
                   <th class="text-center">Stok</th>
                 </tr>
               </thead>
-              <tbody v-if="(data.KATListProduk !== null) && (data.KATListProduk.length !== 0)">
-                <tr v-for="(item, index) in data.KATListProduk" @click="rowClicked(item, tenantID)">
+              <tbody v-if="(data.INVListStok !== null) && (data.INVListStok.length !== 0)">
+                <tr v-for="(item, index) in data.INVListStok" @click="rowClicked(item, tenantID)">
                   <td>{{ index+1 }}</td>
                   <td>{{ item.upc }}</td>
                   <td>{{ item.nama }}</td>

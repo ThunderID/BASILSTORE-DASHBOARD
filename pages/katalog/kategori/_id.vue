@@ -17,7 +17,7 @@
             </div>
             <div class="col-12 col-md-6">
               <b-form-group label="Kategori">
-                <b-form-input data-vv-name="kategori" v-validate="'required|min:3'" v-model="form.kategori" :state="errors.has('kategori')" placeholder="kategori Plan"></b-form-input>
+                <b-form-input data-vv-name="kategori" v-validate="'required|min:3'" v-model="form.tipe" :state="errors.has('kategori')" placeholder="kategori Plan"></b-form-input>
                 <b-form-invalid-feedback :force-show="errors.has('kategori')">{{ errors.first('kategori') }}</b-form-invalid-feedback>
               </b-form-group>
             </div>
@@ -46,7 +46,7 @@
 
 <script>
 import KategoriQuery from '~/apollo/queries/query_group'
-import UpdateTenant from '~/apollo/mutations/UpdateTenant'
+import UpdateGroup from '~/apollo/mutations/AddUpdateGroup'
 
 export default {
   props: {
@@ -80,9 +80,9 @@ export default {
       },
       form: {
         nama: '',
-        tipe: 'kategori'
+        tipe: '',
+        id: ''
       },
-      id: '',
       tenantID: ''
     }
   },
@@ -108,9 +108,8 @@ export default {
       this.tenantID = tenantTemp.join('')
       console.log(this.tenantID)
 
-      queryVar.jalur = this.$route.params.id
       queryVar.tenant_id = this.tenantID
-
+      queryVar.search = this.nama
       this.$apollo.query(
         {
           query: KategoriQuery,
@@ -119,6 +118,8 @@ export default {
         }
       ).then(function (result) {
         vm.form.nama = result.data.KATGrup[0].nama
+        vm.form.id = result.data.KATGrup[0].id
+        vm.form.tipe = result.data.KATGrup[0].tipe
       }).catch(e => {
         if (e.graphQLErrors && Array.isArray(e.graphQLErrors) && e.graphQLErrors.length) {
           e.graphQLErrors.forEach(function (error) {
@@ -142,14 +143,19 @@ export default {
       e.preventDefault()
       vm.isLoading = true
       if (vm.errors.count() === 0) {
-        vm.$apollo.mutate({
-          mutation: UpdateTenant,
-          variables: {
-            id: vm.id,
-            input: vm.form
+        vm.transformedData = {
+          tenant_id: this.tenantID,
+          updateGrup: {
+            id: vm.form.id,
+            nama: vm.form.nama,
+            tipe: vm.form.tipe
           }
+        }
+        vm.$apollo.mutate({
+          mutation: UpdateGroup,
+          variables: vm.transformedData
         }).then(function (res) {
-          vm.$router.replace('/manajemen/toko')
+          vm.$router.replace('/katalog/kategori')
           vm.isLoading = false
         }).catch(function (e) {
           vm.$emit('fail', e)

@@ -1,26 +1,14 @@
 <template>
   <div>
-    <b-navbar toggleable="md" type="light" class='border-bottom p-0 p-md-1 navbar-second' variant="white">
-
-      <!-- BRAND -->
-      <b-navbar-brand to="/catalog" class='pl-3 mr-5'>Inventory <i class='fas fa-chevron-right'></i></b-navbar-brand>
-
-      <b-navbar-toggle target="nav_page_menu_collapse" class='border-0'></b-navbar-toggle>
-      <!-- MENU -->
-      <b-collapse is-nav id="nav_page_menu_collapse">
-        <!-- Left -->
-        <b-navbar-nav class='px-3'>
-          <b-nav-item to='/catalog/add'>Barang</b-nav-item>
-          <b-nav-item to='/catalog/add'>Transaksi Masuk/Keluar</b-nav-item>
-          <b-nav-item to='/catalog/add'>Report</b-nav-item>
-        </b-navbar-nav>
-      </b-collapse>
-
-    </b-navbar>
-
-    <b-container class='mt-5'>
+    <b-container fluid>
       <b-row>
+        <b-col cols="12" md="3" xl="2" class="bg-white border-right border-bottom" style="height: 100vh">
+          <b-nav vertical class="py-4">
+            <b-nav-item :to="{ name: 'inventory-produk' }" class="text-secondary" >Produk</b-nav-item>
+          </b-nav>
+        </b-col>
         <b-col>
+          <div class="clearfix">&nbsp;</div>
           <nuxt-child/>
         </b-col>
       </b-row>
@@ -30,6 +18,7 @@
 
 <script>
 export default {
-  layout: 'dashboard'
+  layout: 'dashboard',
+  middleware: 'auth'
 }
 </script>

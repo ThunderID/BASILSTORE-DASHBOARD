@@ -9,7 +9,8 @@ mutation KATUpdatingProduk(
 	$tambahHarga: [IProdukHarga],
 	$hapusHarga: [String],
 	$tambahKeyword: [IProdukKeyword],
-	$hapusKeyword: [String]
+	$hapusKeyword: [String],
+	$hapusBarang: Boolean
 ) {
 	KATUpdatingProduk (
 		tenant_id: $tenant_id,
@@ -20,7 +21,8 @@ mutation KATUpdatingProduk(
 		tambahHarga: $tambahHarga,
 		hapusHarga: $hapusHarga,
 		tambahKeyword: $tambahKeyword,
-		hapusKeyword: $hapusKeyword
+		hapusKeyword: $hapusKeyword,
+		hapusBarang: $hapusBarang
 	) {
 		...produk
 	}

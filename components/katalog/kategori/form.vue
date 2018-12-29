@@ -22,7 +22,7 @@
         <b-row>
           <b-col cols="12">
             <b-form-group label="Tipe">
-              <b-form-input v-model="tipe" readonly></b-form-input>
+              <b-form-input v-model="tipe"></b-form-input>
             </b-form-group>
           </b-col>
           <!-- <b-col cols="12" md="6">

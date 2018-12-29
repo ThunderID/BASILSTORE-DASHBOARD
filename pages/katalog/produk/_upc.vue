@@ -364,7 +364,7 @@
       </b-media>
     </b-card>
     <!-- Modal -->
-   <b-modal id="warning" title="Hapus Katalog" size="lg" @ok="hapusProduk" ok-title="Hapus" ok-variant="danger" cancel-variant="light" no-close-on-backdrop>
+   <b-modal id="warning" title="Hapus Katalog" size="lg" @ok="onDelete" ok-title="Hapus" ok-variant="danger" cancel-variant="light" no-close-on-backdrop>
       <b-container>
         <div>
           Anda yakin untuk menghapus ?
@@ -673,6 +673,38 @@ export default {
           hapusHarga: this.hapusHarga,
           tambahKeyword: this.tempKeyword,
           hapusKeyword: this.hapusKeyword
+        }
+        console.log('yes submit')
+        vm.$apollo.mutate({
+          mutation: UpdateKatalog,
+          variables: vm.transformedData
+        }).then(function (res) {
+          console.log('SUCCESS')
+          vm.isLoading = false
+          //  + vm.transformedData.upc, query: vm.transformedData.tenant_id
+          window.location.reload()
+        }).catch(function (e) {
+          console.log(e)
+          vm.$emit('FAIL', e)
+          vm.isLoading = false
+        })
+      } else {
+        console.log('gagal submit')
+        console.log(vm.errors)
+        vm.isLoading = false
+      }
+    },
+    onDelete (e) {
+      let vm = this
+      console.log('delete')
+      e.preventDefault()
+      vm.isLoading = true
+      vm.$validator.validateAll()
+      if (vm.errors.count() === 0) {
+        vm.transformedData = {
+          tenant_id: this.tenantID,
+          upc: this.editUpc,
+          hapusBarang: true
         }
         console.log('yes submit')
         vm.$apollo.mutate({

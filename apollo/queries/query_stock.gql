@@ -1,0 +1,36 @@
+query INVListStok(
+	$skip: Int
+    $take: Int
+    $tenant_id: String!
+    $sku: String
+) {
+	INVListStok(
+		skip: $skip
+        take: $take
+        tenant_id: $tenant_id
+        sku: $sku
+	) {
+		sku,
+        nama,
+        storage{
+            id,
+            nama
+        },
+        detail{
+            id,
+            reference{
+                id,
+                tag
+            },
+            kuantitas{
+                kuantitas,
+                satuan
+            },
+            tanggal{
+                date,
+                timezone_type,
+                timezone
+            }
+        }
+	}
+}
